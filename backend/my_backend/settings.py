@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # Apps
     'accounts',
+    'movies',
 
     # CORS 
     'corsheaders',
