@@ -6,19 +6,19 @@ from rest_framework.permissions import IsAuthenticated
 
 from rest_framework import status
 from django.shortcuts import get_object_or_404, get_list_or_404
-from .serializers import MovieListSerializer, CommentSerializer
-from .models import Movies, Comment
+from .serializers import MovieSerializer, CommentSerializer, LocationMovieSerializer
+from .models import Movies, Comment, Location
 # Create your views here.
 
 @api_view(['GET'])
 def movie_list(request):
     if request.method=='GET':
         movies = get_list_or_404(Movies)
-        serializer = MovieListSerializer(movies, many=True)
+        serializer = MovieSerializer(movies, many=True)
         return Response(serializer.data)
     
 # @api_view(['GET'])
-# def article_detail(request, movie_pk):
+# def movie_detail(request, movie_pk):
 #     movie = get_object_or_404(Movies, pk=movie_pk)
 #     serializer = 
 
@@ -43,3 +43,12 @@ def comment_detail(request, comment_pk):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
+
+
+# 행정구역에 따른 영화 리스트 출력(아직 중개 테이블 추가 못해줌)        
+@api_view(['GET'])
+def location_movies(request, location_pk):
+    location = get_list_or_404(Location,pk=location_pk)
+    if request.method=='GET':
+        serializer = LocationMovieSerializer(location, many=True)
+        return Response(serializer.data)

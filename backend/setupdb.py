@@ -15,7 +15,8 @@ import csv, requests
 # Create your views here.
 ## Location Model DB 저장
 def location():       
-    f = open('C:/Users/SSAFY/Desktop/movie_location.csv')
+    # f = open('C:/Users/SSAFY/Desktop/movie_location.csv')
+    f = open('C:/Users/hanul/OneDrive/바탕 화면/movie_location.csv')
     rdr = csv.reader(f)
     title = next(rdr)
     arr = []
@@ -120,7 +121,8 @@ def locationDetail():
  
     movies = Movies.objects.all()
     for movie in movies:
-        f = open('C:/Users/SSAFY/Desktop/movie_location.csv')
+        # f = open('C:/Users/SSAFY/Desktop/movie_location.csv')
+        f = open('C:/Users/hanul/OneDrive/바탕 화면/movie_location.csv')
         rdr = csv.reader(f)
         _ = next(rdr)
 
@@ -144,7 +146,7 @@ def locationDetail():
                 )
 
             
-# locationDetail()
+locationDetail()
 
 ## Actor
 def actor():
@@ -226,4 +228,4 @@ def movie_actor():
                 movie.actors.add(actor.id)
                 movie.save()         
 
-movie_actor()
+# movie_actor()
