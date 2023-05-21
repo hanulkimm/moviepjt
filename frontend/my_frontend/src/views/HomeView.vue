@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import $ from 'jquery'
+
 export default {
   name: 'HomeView',
   methods: {
@@ -37,4 +39,10 @@ export default {
     }
   }
 }
+$(function() {
+  $('.map').maphilight({
+    fillColor: '008800'
+  });
+});
+
 </script>

@@ -2,8 +2,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MiddleMapView from '../views/MiddleMapView.vue'
+import 'maphilight'
 
 Vue.use(VueRouter)
+
 
 const routes = [
   {
@@ -31,5 +33,6 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
 
 export default router
