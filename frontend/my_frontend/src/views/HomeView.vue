@@ -33,6 +33,7 @@ export default {
     },
     clickRegion(event){
       console.log(event.target.title)
+      this.$router.push({name: 'region', params: { region: event.target.title}})
     }
   }
 }
