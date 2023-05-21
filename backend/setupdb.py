@@ -146,7 +146,7 @@ def locationDetail():
                 )
 
             
-locationDetail()
+# locationDetail()
 
 ## Actor
 def actor():
@@ -228,4 +228,17 @@ def movie_actor():
                 movie.actors.add(actor.id)
                 movie.save()         
 
+# movie_actor()
+
+
+### movie-location
+# movie()
+# location()
+# locationDetail()
+
+### Genre
+# genre()
+
+### Actor
+# actor()
 # movie_actor()
