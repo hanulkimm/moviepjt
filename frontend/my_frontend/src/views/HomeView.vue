@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import $ from 'jquery'
+
 export default {
   name: 'HomeView',
   methods: {
@@ -33,7 +35,14 @@ export default {
     },
     clickRegion(event){
       console.log(event.target.title)
+      this.$router.push({name: 'region', params: { region: event.target.title}})
     }
   }
 }
+$(function() {
+  $('.map').maphilight({
+    fillColor: '008800'
+  });
+});
+
 </script>

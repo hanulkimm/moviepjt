@@ -1,14 +1,22 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import MiddleMapView from '../views/MiddleMapView.vue'
+import 'maphilight'
 
 Vue.use(VueRouter)
+
 
 const routes = [
   {
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: '/:region',
+    name: 'region',
+    component: MiddleMapView
   },
   {
     path: '/about',
@@ -25,5 +33,6 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
 
 export default router
