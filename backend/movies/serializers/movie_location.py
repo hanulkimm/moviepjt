@@ -35,24 +35,3 @@ class LocationSerializer(serializers.ModelSerializer):
         return representation
 
 
-# class LocationDetailSerializer(serializers.ModelSerializer):
-#     movie = MovieSerializer()
-
-#     class Meta:
-#         model = LocationDetail
-#         # fields = '__all__'
-#         exclude = ['id',]
-
-# class LocationSerializer(serializers.ModelSerializer):
-#     location_details = serializers.SerializerMethodField()
-#     movies = MovieSerializer(many=True)
-#     class Meta:
-#         model = Location
-#         # fields = '__all__'
-#         exclude = ['movies',]
-
-    
-#     def get_location_details(self, obj):
-#         location_details = obj.locationdetail_set.all()
-#         serializer = LocationDetailSerializer(location_details,many=True)
-#         return serializer.data

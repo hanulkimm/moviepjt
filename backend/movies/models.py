@@ -39,7 +39,7 @@ class Movies(models.Model):
 class Location(models.Model):
     state = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
-    movies = models.ManyToManyField(Movies, through='LocationDetail', related_name='total_location')
+    movies = models.ManyToManyField(Movies, through='LocationDetail', related_name='locations')
 
     def __str__(self):
         return self.state
@@ -63,4 +63,3 @@ class Comment(models.Model):
     
     def __str__(self):
         return self.title
-    

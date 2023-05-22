@@ -8,8 +8,8 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404, get_list_or_404
 from .serializers.movie_location import LocationSerializer
 from .serializers.movie_comment import CommentSerializer
-from .serializers.movie_detail import MovieDetailSerializer
-from .models import Movies, Comment, Location
+from .serializers.movie_detail import MovieLocationDetailSerializer,LocationDetailSerializer
+from .models import Movies, Comment, Location, LocationDetail
 # Create your views here.
  
 
@@ -48,14 +48,17 @@ def comment_likes(request, comment_pk):
 # 행정구역에 따른 영화 리스트 출력    
 @api_view(['GET'])
 def location_movies(request, state, city):
-    location = get_list_or_404(Location, state=state, city=city)
-    serializer = LocationSerializer(location, many=True)
+    location = get_object_or_404(Location, state=state, city=city)
+    serializer = LocationSerializer(location)
     return Response(serializer.data)
 
 # 특정 영화 detail 
 @api_view(['GET'])
-def movie_detail(request, movie_pk):
-    print(1)
-    movie = get_object_or_404(Movies, pk=movie_pk)
-    serializer = MovieDetailSerializer(movie)
-    return Response(serializer.data)
+def movie_detail(request, movie_pk, state):
+    movie = Movies.objects.get(pk=movie_pk)
+    location_details = LocationDetail.objects.filter(movie=movie, location__state=state)
+    serializer = MovieLocationDetailSerializer(movie)
+    data = serializer.data
+    data['location_details'] = LocationDetailSerializer(location_details, many=True).data
+
+    return Response(data)
