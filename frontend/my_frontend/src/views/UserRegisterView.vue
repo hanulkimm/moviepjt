@@ -4,7 +4,7 @@
       <div class="form-holder">
         <div class="form-content">
           <div class="form-items">
-            <h3>Register Today</h3>
+            <h3>Register</h3>
             <p>Fill in the data below.</p>
             <form class="requires-validation" novalidate>
 
@@ -164,5 +164,4 @@ html, body {
 .valid-feedback{
   color: #2acc80;
 }
-</style>
 </style>
