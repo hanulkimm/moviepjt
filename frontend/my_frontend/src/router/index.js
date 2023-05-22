@@ -16,6 +16,11 @@ const routes = [
     component: HomeView
   },
   {
+    path: '/login',
+    name: 'login',
+    component: UserRegisterView
+  },
+  {
     path: '/:region',
     name: 'region',
     component: MiddleMapView
@@ -33,11 +38,6 @@ const routes = [
     name: 'movie',
     component: MovieDetailView
   },
-  {
-    path: '/login',
-    name: 'login',
-    component: UserRegisterView
-  }
 ]
 
 const router = new VueRouter({

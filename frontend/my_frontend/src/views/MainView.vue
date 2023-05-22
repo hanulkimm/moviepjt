@@ -89,7 +89,7 @@
 
 <script>
   export default {
-    name: 'App',
+    name: 'MainView',
     data(){
       return {
         state: '',
