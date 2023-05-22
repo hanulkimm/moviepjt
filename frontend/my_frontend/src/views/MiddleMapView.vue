@@ -1,23 +1,28 @@
 <template>
-  <div class="d-flex justify-content-center">
-    <div class="">
+  <div class="">
+    <div class="d-flex justify-content-center">
       <img :src="require(`@/assets/map_remove/${this.region}.png`)" usemap="#image-map" class="map">
+      <map name="image-map">
+        <area v-for="region in regions" :key="`${region.title}`" @click="clickRegion" target="" :alt="region.title" :title="region.title" :coords="region.coords" shape="poly">
+      </map>
     </div>
-
-    <map name="image-map">
-      <area v-for="region in regions" :key="`${region.title}`" @click="clickRegion" target="" :alt="region.title" :title="region.title" :coords="region.coords" shape="poly">
-    </map>
     <div>
-      영화 리스트
+      <h4><strong>영화 리스트</strong></h4>
     </div>
+    <movieList/>
   </div>
   
 </template>
 
 <script>
 import $ from 'jquery'
+import movieList from '@/components/movieList.vue'
+
 export default {
   name: 'MiddleMapView',
+  components:{
+    movieList,
+  },
   data(){
     return {
       region: this.$route.params.region,
@@ -31,6 +36,11 @@ export default {
   methods:{
     clickRegion(event){
       console.log(event.target.title)
+      const payload = {
+        region: this.region,
+        city: event.target.title
+      }
+      this.$store.dispatch('getMovieList', payload)
     }
   },
   created(){

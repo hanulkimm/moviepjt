@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
@@ -172,13 +173,26 @@ export default new Vuex.Store({
       ]
 
 
-    }
+    },
+    movieList: []
   },
   getters: {
   },
   mutations: {
+    setMovieList(state, payload){
+      state.movieList = payload
+    }
   },
   actions: {
+    getMovieList(context, payload){
+      axios({
+        method: 'get',
+        url: 'http://127.0.0.1:8000/api/v1/movies/location/1/',
+      }).then(res => {
+        console.log(payload)
+        context.commit('setMovieList', res.data[0].location_details)
+      })
+    }
   },
   modules: {
   }
