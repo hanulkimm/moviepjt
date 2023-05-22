@@ -3,13 +3,13 @@
     <div class="d-flex justify-content-center">
       <img :src="require(`@/assets/map_remove/${this.region}.png`)" usemap="#image-map" class="map">
       <map name="image-map">
-        <area v-for="region in regions" :key="`${region.title}`" @click="clickRegion" target="" :alt="region.title" :title="region.title" :coords="region.coords" shape="poly">
+        <area v-for="region in regions" :key="`${region.title}`" @mouseout="unselectRegion" @mouseover="selectRegion" @click="clickRegion" target="" :alt="region.title" :title="region.title" :coords="region.coords" shape="poly">
       </map>
     </div>
     <div>
       <h4><strong>영화 리스트</strong></h4>
     </div>
-    <movieList/>
+    <movieList :region="region"/>
   </div>
   
 </template>
@@ -36,11 +36,19 @@ export default {
   methods:{
     clickRegion(event){
       console.log(event.target.title)
+      this.$emit('selectCity', event.target.title)
       const payload = {
         region: this.region,
         city: event.target.title
       }
       this.$store.dispatch('getMovieList', payload)
+    },
+    selectRegion(event){
+      console.log(event.target.title)
+      this.$emit('selectCity', event.target.title)
+    },
+    unselectRegion(){
+      this.$emit('unselectCity')
     }
   },
   created(){
