@@ -1,6 +1,6 @@
 <template>
   <div>
-    <router-link to="/">Home</router-link> |
+    <router-link to="/">Main</router-link> |
     <router-link :to="{name:'login'}">login</router-link>
     <router-view></router-view>
   </div>
