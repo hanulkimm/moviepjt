@@ -174,23 +174,40 @@ export default new Vuex.Store({
 
 
     },
-    movieList: []
+    movieList: [],
+    movie: {}
   },
   getters: {
   },
   mutations: {
     setMovieList(state, payload){
       state.movieList = payload
+    },
+    resetMovieList(state){
+      state.movieList = []
+    },
+    getDetailMovie(state, payload){
+      state.movie = payload
     }
   },
   actions: {
     getMovieList(context, payload){
       axios({
         method: 'get',
-        url: 'http://127.0.0.1:8000/api/v1/movies/location/1/',
+        url: `http://127.0.0.1:8000/api/v1/movies/${payload.region}/${payload.city}/`,
       }).then(res => {
-        console.log(payload)
-        context.commit('setMovieList', res.data[0].location_details)
+        context.commit('setMovieList', res.data[0].movies)
+      })
+    },
+    resetMovieList(context){
+      context.commit('resetMovieList')
+    },
+    getDetailMovie(context, payload){
+      axios({
+        method: 'get',
+        url: `http://127.0.0.1:8000/api/v1/movies/${payload.movie_pk}/`
+      }).then(res => {
+        context.commit('getDetailMovie', res.data)
       })
     }
   },
