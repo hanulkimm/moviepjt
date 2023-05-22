@@ -35,17 +35,27 @@ def comment_edit(request, comment_pk):
             serializer.save()
             return Response(serializer.data)
 
+@api_view(['POST'])
+def comment_likes(request, comment_pk):
+    comment = get_object_or_404(Comment, pk=comment_pk)
+    if comment.like_users.filter(pk=request.user.pk).exists():
+        comment.like_users.remove(request.user)
+    else:
+        comment.like_users.add(request.user)
+    
+
 
 # 행정구역에 따른 영화 리스트 출력    
 @api_view(['GET'])
-def location_movies(request, location_pk):
-    location = get_list_or_404(Location,pk=location_pk)
+def location_movies(request, state, city):
+    location = get_list_or_404(Location, state=state, city=city)
     serializer = LocationSerializer(location, many=True)
     return Response(serializer.data)
 
 # 특정 영화 detail 
 @api_view(['GET'])
 def movie_detail(request, movie_pk):
+    print(1)
     movie = get_object_or_404(Movies, pk=movie_pk)
     serializer = MovieDetailSerializer(movie)
     return Response(serializer.data)

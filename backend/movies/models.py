@@ -16,7 +16,6 @@ class Actor(models.Model):
     def __str__(self):
         return self.actor_name
 
-
 class Movies(models.Model):
     kmdb_id = models.CharField(max_length=100)
     tmdb_id = models.CharField(max_length=100, null=True)
