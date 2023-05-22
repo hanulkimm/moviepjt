@@ -3,7 +3,7 @@
     <nav class="navbar navbar-dark bg-dark sticky-top">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Logo</a>
-        <router-link @click.native="resetMovieList" to="/">Home</router-link>
+        <router-link @click.native="resetMovieList" to="/home">Home</router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>

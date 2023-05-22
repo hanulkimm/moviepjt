@@ -44,7 +44,6 @@ export default {
       this.$store.dispatch('getMovieList', payload)
     },
     selectRegion(event){
-      console.log(event.target.title)
       this.$emit('selectCity', event.target.title)
     },
     unselectRegion(){
