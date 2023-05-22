@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MiddleMapView from '../views/MiddleMapView.vue'
 import MovieDetailView from '../views/MovieDetailView.vue'
+import UserRegisterView from '../views/UserRegisterView.vue'
 import 'maphilight'
 
 Vue.use(VueRouter)
@@ -31,6 +32,11 @@ const routes = [
     path: '/:region/:movie_pk',
     name: 'movie',
     component: MovieDetailView
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: UserRegisterView
   }
 ]
 
