@@ -4,24 +4,30 @@
       <div class="form-holder">
         <div class="form-content">
           <div class="form-items">
-            <h3>Register</h3>
-            <p>Fill in the data below.</p>
-            <form class="requires-validation" novalidate>
+            <h3>회원가입</h3>
+            <p>아이디로 간편하게 CineMap을 시작하세요! </p>
+            <form @submit.prevent='signUp' class="requires-validation" novalidate>
 
               <div class="col-md-12">
-                <input v-model="state" class="form-control" type="text" name="name" placeholder="행정구역" required>
+                <input v-model="username" class="form-control" type="text" name="name" placeholder="Username" required>
                 <div class="valid-feedback">Username field is valid!</div>
                 <div class="invalid-feedback">Username field cannot be blank!</div>
               </div>
+              <br>
+              
+              <div class="col-md-12">
+                <input v-model="password1" class="form-control" type="password" name="name" placeholder="Password" required>
+                <div class="valid-feedback">Username field is valid!</div>
+                <div class="invalid-feedback">Username field cannot be blank!</div>
+              </div>
+              <br>
 
               <div class="col-md-12">
-                <select class="form-select mt-3" required>
-                  <option selected disabled value="">City</option>
-                  <option v-for="city in cityList" :value="city.title" :key="city.title">{{city.title}}</option>
-                </select>
-                  <div class="valid-feedback">You selected a position!</div>
-                  <div class="invalid-feedback">Please select a position!</div>
+                <input v-model="password2" class="form-control" type="password" name="name" placeholder="Password Check" required>
+                <div class="valid-feedback">Username field is valid!</div>
+                <div class="invalid-feedback">Username field cannot be blank!</div>
               </div>
+              <br>
 
               <div class="form-button mt-3">
                 <button id="submit" type="submit" class="btn btn-primary">Register</button>
@@ -36,8 +42,27 @@
 
 <script>
 export default {
-  name: 'UserRegisterView'
+  name: 'UserSignUpView',
+  data(){
+    return {
+      username : null,
+      password1 : null,
+      password2 : null,
+    }
 
+  },
+  methods:{
+    signUp(){
+      const username = this.username
+      const password1 = this.password1
+      const password2 = this.password2
+
+      const payload = {
+        username, password1, password2
+      }
+      this.$store.dispatch('signUp',payload)
+    }
+  }
 }
 </script>
 
