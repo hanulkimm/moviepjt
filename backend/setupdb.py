@@ -15,8 +15,8 @@ import csv, requests
 # Create your views here.
 ## Location Model DB 저장
 def location():       
-    # f = open('C:/Users/SSAFY/Desktop/movie_location.csv')
-    f = open('C:/Users/hanul/OneDrive/바탕 화면/movie_location.csv')
+    f = open('C:/Users/SSAFY/Desktop/movie_location.csv')
+    # f = open('C:/Users/hanul/OneDrive/바탕 화면/movie_location.csv')
     rdr = csv.reader(f)
     title = next(rdr)
     arr = []
@@ -121,8 +121,8 @@ def locationDetail():
  
     movies = Movies.objects.all()
     for movie in movies:
-        # f = open('C:/Users/SSAFY/Desktop/movie_location.csv')
-        f = open('C:/Users/hanul/OneDrive/바탕 화면/movie_location.csv')
+        f = open('C:/Users/SSAFY/Desktop/movie_location.csv')
+        # f = open('C:/Users/hanul/OneDrive/바탕 화면/movie_location.csv')
         rdr = csv.reader(f)
         _ = next(rdr)
 
@@ -146,7 +146,6 @@ def locationDetail():
                 )
 
             
-# locationDetail()
 
 ## Actor
 def actor():
@@ -155,26 +154,26 @@ def actor():
     actor_id_total_lst = []
     for movie in movies:
 
-        # movie_name = movie.movie_title
-        # release_date = movie.release_date # '2019-01-09' 형식으로
-        # if release_date:
-        #     release_date = release_date[:4] + '-' + release_date[4:6] + '-' + release_date[6:]
+        movie_name = movie.movie_title
+        release_date = movie.release_date # '2019-01-09' 형식으로
+        if release_date:
+            release_date = release_date[:4] + '-' + release_date[4:6] + '-' + release_date[6:]
 
-        # URL = f'https://api.themoviedb.org/3/search/movie?api_key=5796ca45f3451bf2d68f3949e8f4c4de&language=ko&region=KR&query={movie_name}'
-        # response = requests.get(URL).json()
-        # results = response.get('results')
+        URL = f'https://api.themoviedb.org/3/search/movie?api_key=5796ca45f3451bf2d68f3949e8f4c4de&language=ko&region=KR&query={movie_name}'
+        response = requests.get(URL).json()
+        results = response.get('results')
 
-        # for i in results:
-        #     if i.get('original_language') == 'ko':
-        #         if release_date: # 개봉일 존재하는 경우
-        #             if i.get('release_date') == release_date:
-        #                 tmdb_id = i.get('id')
-        #         else:
-        #             tmdb_id = i.get('id')
-        tmdb_id = movie.tmdb_id
+        for i in results:
+            if i.get('original_language') == 'ko':
+                if release_date: # 개봉일 존재하는 경우
+                    if i.get('release_date') == release_date:
+                        tmdb_id = i.get('id')
+                else:
+                    tmdb_id = i.get('id')
+        # tmdb_id = movie.tmdb_id # movies.json 이용해서 데이터 저장되어 있다면 
         if tmdb_id:
-            # movie.tmdb_id = tmdb_id # movie model에 tmdb_movie_id 넣어주기
-            # movie.save()
+            movie.tmdb_id = tmdb_id # movie model에 tmdb_movie_id 넣어주기
+            movie.save()
             URL = f'https://api.themoviedb.org/3/movie/{tmdb_id}/credits?api_key=5796ca45f3451bf2d68f3949e8f4c4de'
             response = requests.get(URL).json()
             results = response.get('cast')
@@ -206,7 +205,7 @@ def actor():
                         profile_path = profile_path,
                     )
 
-# actor()
+
 
 # Movie - Actor
 def movie_actor():
@@ -228,7 +227,6 @@ def movie_actor():
                 movie.actors.add(actor.id)
                 movie.save()         
 
-# movie_actor()
 
 
 ### movie-location
