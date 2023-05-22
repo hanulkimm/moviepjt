@@ -14,9 +14,10 @@
     "imagemapster": "^1.5.4",
     "jquery": "^3.7.0",
     "maphilight": "^1.4.2",
-    "vue": "^2.6.14",
+    "vue": "^2.7.14",
     "vue-router": "^3.5.1",
-    "vuex": "^3.6.2"
+    "vuex": "^3.6.2",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",

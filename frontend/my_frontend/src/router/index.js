@@ -3,7 +3,8 @@ import VueRouter from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MiddleMapView from '../views/MiddleMapView.vue'
 import MovieDetailView from '../views/MovieDetailView.vue'
-import UserRegisterView from '../views/UserRegisterView.vue'
+import UserSignUpView from '../views/UserSignUpView.vue'
+import UserLoginView from'../views/UserLoginView.vue'
 import MainView from '../views/MainView.vue'
 import 'maphilight'
 
@@ -35,9 +36,14 @@ const routes = [
     component: MainView
   },
   {
+    path: '/signup',
+    name: 'signup',
+    component: UserSignUpView
+  },
+  {
     path: '/login',
     name: 'login',
-    component: UserRegisterView
+    component : UserLoginView
   },
   {
     path: '/about',
