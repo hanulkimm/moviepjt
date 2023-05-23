@@ -2,15 +2,12 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import router from '../router'
-import createPersistedState from 'vuex-persistedstate'
+// import createPersistedState from 'vuex-persistedstate'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  plugins:[
-    createPersistedState(),
-  ],
   state: {
-    token:null,
+    token:localStorage.getItem('token'),
     regions: {
       강원도: [
         {title: '철원군', coords: '14,100,18,106,23,101,28,97,36,92,43,94,51,99,51,104,53,99,62,101,65,95,69,91,75,94,81,97,84,94,93,101,105,94,111,91,118,91,120,96,130,94,136,99,149,95,159,103,156,106,147,104,143,108,136,115,129,110,123,112,116,106,111,115,102,121,101,126,95,130,94,135,93,142,91,149,83,149,78,153,73,156,68,151,62,155,57,158,54,150,46,150,44,148,50,134,43,136,35,146,26,140,28,131,23,128,22,117,12,120,6,115,7,109,3,102,10,103,12,105'},
@@ -257,9 +254,12 @@ export default new Vuex.Store({
       state.movie = payload
     },
     SAVE_TOKEN(state, token){
-      state.token = token
+      localStorage.setItem('token', token)
       router.push({name:'main'})
     },
+    LOG_OUT(){
+      localStorage.removeItem('token')
+    }
   },
   actions: {
     getMovieList(context, payload){
@@ -314,10 +314,12 @@ export default new Vuex.Store({
         }
       })
       .then(res=>{
-        console.log(res.data.key)
         context.commit('SAVE_TOKEN', res.data.key)
       })
       .catch(err=>console.log(err))
+    },
+    logout(context) {
+      context.commit('LOG_OUT')
     }
   },
   modules: {

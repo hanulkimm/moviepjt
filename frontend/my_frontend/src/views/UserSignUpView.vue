@@ -16,16 +16,19 @@
               <br>
               
               <div class="col-md-12">
-                <input v-model="password1" class="form-control" type="password" name="name" placeholder="Password" required>
+                <input v-model="password1" @input="passwordLengthValid" class="form-control" type="password" name="name" placeholder="Enter Password" required>
                 <div class="valid-feedback">Username field is valid!</div>
                 <div class="invalid-feedback">Username field cannot be blank!</div>
+                <div class="error-message" v-if="passwordError">비밀번호는 특수기호를 하나 이상 포함하고 8자 이상이어야 합니다.</div>
+              
               </div>
               <br>
 
               <div class="col-md-12">
-                <input v-model="password2" class="form-control" type="password" name="name" placeholder="Password Check" required>
+                <input v-model="password2" @input="passwordMatchValid" class="form-control" type="password" name="name" placeholder="Enter Password Again" required>
                 <div class="valid-feedback">Username field is valid!</div>
                 <div class="invalid-feedback">Username field cannot be blank!</div>
+                <div class="error-message" v-if="matchError">비밀번호가 일치하지 않습니다.</div>
               </div>
               <br>
 
@@ -48,10 +51,26 @@ export default {
       username : null,
       password1 : null,
       password2 : null,
+      passwordError: false,
+      matchError: false,
     }
-
   },
   methods:{
+    passwordLengthValid(){
+      var reg_pwd = /[`~!@#$%^&*()_|+\-=?;:'",.<>]/
+      if (!reg_pwd.test(this.password1) || (this.password1.length < 8)) {
+        this.passwordError = true
+      } else {
+        this.passwordError = false
+      }
+    },
+    passwordMatchValid(){
+      if (this.password1 !== this.password2){
+        this.matchError = true
+      } else {
+        this.matchError = false
+      }
+    },
     signUp(){
       const username = this.username
       const password1 = this.password1
@@ -61,12 +80,18 @@ export default {
         username, password1, password2
       }
       this.$store.dispatch('signUp',payload)
+      
     }
   }
 }
 </script>
 
 <style>
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
 
 *, body {
     font-family: 'Poppins', sans-serif;
