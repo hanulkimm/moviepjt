@@ -258,6 +258,7 @@ export default new Vuex.Store({
       state.movie = payload
     },
     SAVE_TOKEN(state, token){
+      state.token = token,
       localStorage.setItem('token', token)
       router.push({name:'main'})
     },
@@ -276,8 +277,9 @@ export default new Vuex.Store({
     selectCity(state, payload){
       state.selectedCity = payload
     },
-    LOG_OUT(){
+    LOG_OUT(state){
       localStorage.removeItem('token')
+      state.token=null
     }
   },
   actions: {
