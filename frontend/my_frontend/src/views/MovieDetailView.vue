@@ -39,7 +39,7 @@
         <div class="profile-content">
           <div class="profile-items">
             <div v-for="actor in movie.actors" class="profile-card-2" :key="actor.actor_name">
-              <img :src="actor.profile_path" class="img img-responsive rounded mx-auto d-block">
+              <img :src="actor.profile_path ? actor.profile_path:'../assets/blankprofile.png'" class="img img-responsive rounded mx-auto d-block">
               <p>{{actor.actor_name}}</p>
             </div>
           </div>
