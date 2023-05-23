@@ -55,7 +55,7 @@
                   <div class="form-items">
                     <h3>Register Today</h3>
                     <p>Fill in the data below.</p>
-                    <form class="requires-validation" novalidate>
+                    <form class="requires-validation" novalidate @submit.prevent="getMovieList">
 
                       <div class="col-md-12">
                         <input v-model="state" class="form-control" type="text" name="name" placeholder="행정구역" required>
@@ -64,7 +64,7 @@
                       </div>
 
                       <div class="col-md-12">
-                        <select class="form-select mt-3" required>
+                        <select class="form-select mt-3" v-model="city" required>
                           <option selected disabled value="">City</option>
                           <option v-for="city in cityList" :value="city.title" :key="city.title">{{city.title}}</option>
                         </select>
@@ -84,43 +84,65 @@
         </div>
       </div>
     </div>
+    <div class="justify-content-center">
+      <h3 class="movie-list">{{state}} {{city}}</h3>
+      <movieList :region="region"/>
+    </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'MainView',
-    data(){
-      return {
-        state: '',
-        city: '',
-      }
+
+import movieList from '@/components/movieList.vue'
+
+export default {
+  name: 'MainView',
+  components:{
+    movieList,
+  },
+  data(){
+    return {
+      state: '',
+      city: '',
+    }
+  },
+  methods: {
+    resetMovieList(){
+      this.$store.dispatch('resetMovieList')
     },
-    methods: {
-      resetMovieList(){
-        this.$store.dispatch('resetMovieList')
-      },
-      selectState(state){
-        this.state = state
-      },
-      unselectState(){
-        this.state = ''
-      },
-      selectCity(city){
-        this.city = city
-      },
-      unselectCity(){
-        this.city = ''
-      }
+    selectState(state){
+      this.state = state
     },
-    computed: {
-      cityList(){
-        return this.$store.state.regions[this.state]
+    unselectState(){
+      this.state = ''
+    },
+    selectCity(city){
+      this.city = city
+    },
+    unselectCity(){
+      this.city = ''
+    },
+    getMovieList(){
+      const payload = {
+        state: this.state,
+        city: this.city
       }
+      console.log(this.state, this.city)
+      this.$store.dispatch('getMovieList', payload)
+    }
+  },
+  computed: {
+    cityList(){
+      return this.$store.state.regions[this.state]
+    }
+  },
+  watch:{
+    state(){
+      
 
     }
   }
-
+}
 
 </script>
 
@@ -160,7 +182,14 @@ nav a.router-link-exact-active {
 html, body {
     height: 100%;
     background-color: #152733;
-    overflow: hidden;
+    overflow: scroll;
+}
+
+.movie-list {
+    color: #fff;
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 5px;
 }
 
 .map-space{
@@ -232,7 +261,7 @@ html, body {
     color: #fff;
 }
 
-.form-content input[type=text], .form-content input[type=email], .form-content select {
+.form-content input[type=text], .form-content select {
     width: 100%;
     padding: 15px 20px;
     text-align: left;
@@ -257,10 +286,10 @@ html, body {
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active{
-    background-color: #495056;
+    background-color: #467baa;
     outline: none !important;
     border: none !important;
-     box-shadow: none;
+    box-shadow: none;
 }
 
 .invalid-feedback{
