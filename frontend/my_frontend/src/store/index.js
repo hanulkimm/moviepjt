@@ -7,6 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    username :null,
     token:localStorage.getItem('token'),
     regions: {
       강원도: [
@@ -260,7 +261,10 @@ export default new Vuex.Store({
     SAVE_TOKEN(state, token){
       state.token = token,
       localStorage.setItem('token', token)
-      router.push({name:'main'})
+      router.push({name:'home'})
+    },
+    SAVE_USERNAME(state, username){
+      state.username = username
     },
     selectState(state, payload){
       state.state = payload
@@ -324,6 +328,7 @@ export default new Vuex.Store({
         .then((res)=>{
           // console.log(res.data.key)
           context.commit('SAVE_TOKEN', res.data.key)
+          context.commit('SAVE_USERNAME', username)
         })
         .catch(err=>console.log(err))
       
@@ -340,6 +345,7 @@ export default new Vuex.Store({
       })
       .then(res=>{
         context.commit('SAVE_TOKEN', res.data.key)
+        context.commit('SAVE_USERNAME', username)
       })
       .catch(err=>console.log(err))
     },

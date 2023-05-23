@@ -6,6 +6,9 @@
           <div class="form-items">
             <h3>회원가입</h3>
             <p>아이디로 간편하게 CineMap을 시작하세요! </p>
+            <p>이미 회원이신가요? <router-link :to="{name:'login'}">LOGIN</router-link> </p>
+
+
             <form @submit.prevent='signUp' class="requires-validation" novalidate>
 
               <div class="col-md-12">
@@ -19,7 +22,7 @@
                 <input v-model="password1" @input="passwordLengthValid" class="form-control" type="password" name="name" placeholder="Enter Password" required>
                 <div class="valid-feedback">Username field is valid!</div>
                 <div class="invalid-feedback">Username field cannot be blank!</div>
-                <div class="error-message" v-if="passwordError">비밀번호는 특수기호를 하나 이상 포함하고 8자 이상이어야 합니다.</div>
+                <div class="error-message" v-if="passwordError">비밀번호는 8자 이상이어야 합니다.</div>
               
               </div>
               <br>
@@ -57,8 +60,8 @@ export default {
   },
   methods:{
     passwordLengthValid(){
-      var reg_pwd = /[`~!@#$%^&*()_|+\-=?;:'",.<>]/
-      if (!reg_pwd.test(this.password1) || (this.password1.length < 8)) {
+      // var reg_pwd = /[`~!@#$%^&*()_|+\-=?;:'",.<>]/
+      if (this.password1.length < 8) {
         this.passwordError = true
       } else {
         this.passwordError = false
