@@ -21,8 +21,9 @@
                 <div class="valid-feedback">Username field is valid!</div>
                 <div class="invalid-feedback">Username field cannot be blank!</div>
               </div>
+              <div class="error-message" v-if="this.loginTry && !this.$store.state.token" >로그인 정보가 올바르지 않습니다 </div>
               <br>
-
+              
               <p>CineMap 회원이 아닌가요? <router-link :to="{name:'signup'}">지금 바로 가입해보세요!</router-link>  </p>
               <div class="form-button mt-3">
                 <button id="submit" type="submit" class="btn btn-primary">Login</button>
@@ -42,12 +43,14 @@ export default {
     return {
       username : null,
       password : null,
+      loginTry: false,
 
     }
 
   },
   methods:{
     logIn(){
+      this.loginTry = true
       const username = this.username
       const password = this.password
 
@@ -61,6 +64,11 @@ export default {
 </script>
 
 <style>
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 10px;
+}
 
 *, body {
     font-family: 'Poppins', sans-serif;
