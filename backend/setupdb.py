@@ -14,7 +14,7 @@ import csv, requests
 
 # Create your views here.
 ## Location Model DB 저장
-def location():       
+def location(): 
     f = open('C:/Users/SSAFY/Desktop/movie_location.csv')
     # f = open('C:/Users/hanul/OneDrive/바탕 화면/movie_location.csv')
     rdr = csv.reader(f)
@@ -72,20 +72,21 @@ def movie():
             teaser_url = base_url+t
         else:
             teaser_url=''
-        Movies.objects.create(
-            kmdb_id = movieId,
-            kmdb_seq = movieSeq,
-            movie_title = title,
-            director_name = director,
-            nation = nation,
-            plot = plot, 
-            runtime = runtime,
-            rating = rating,
-            release_date = RlsDate,
-            keywords = keywords,
-            poster = poster,
-            teaser = teaser_url
-        )
+        if poster:
+            Movies.objects.create(
+                kmdb_id = movieId,
+                kmdb_seq = movieSeq,
+                movie_title = title,
+                director_name = director,
+                nation = nation,
+                plot = plot, 
+                runtime = runtime,
+                rating = rating,
+                release_date = RlsDate,
+                keywords = keywords,
+                poster = poster,
+                teaser = teaser_url
+            )
 
 # movie()
 
@@ -146,7 +147,6 @@ def locationDetail():
                 )
 
             
-
 ## Actor
 def actor():
     movie_name = ''
@@ -206,7 +206,6 @@ def actor():
                     )
 
 
-
 # Movie - Actor
 def movie_actor():
     movies = Movies.objects.all()
@@ -228,7 +227,6 @@ def movie_actor():
                 movie.save()         
 
 
-
 ### movie-location
 # movie()
 # location()
@@ -239,4 +237,4 @@ def movie_actor():
 
 ### Actor
 # actor()
-# movie_actor()
+movie_actor()

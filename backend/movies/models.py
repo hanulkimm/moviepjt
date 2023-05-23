@@ -57,7 +57,6 @@ class Comment(models.Model):
     movie = models.ForeignKey(Movies, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='like_comments')
-    title = models.CharField(max_length=100)
     content = models.TextField()
     rate = models.IntegerField()
     
