@@ -18,22 +18,32 @@ def comment_create(request, movie_pk):
     movie = get_object_or_404(Movies, pk=movie_pk)
     serializer = CommentSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):
-        serializer.save(movie=movie)
+        serializer.save(movie=movie, user=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
+@api_view(['GET'])
+def comment_list(request, movie_pk):
+    movie = get_object_or_404(Movies, pk=movie_pk)
+    comments = Comment.objects.filter(movie=movie)
+    serializer = CommentSerializer(comments, many=True)
+    return Response(serializer.data)
+
 @api_view(['DELETE', 'PUT'])
 def comment_edit(request, comment_pk):
     comment = get_object_or_404(Comment, pk=comment_pk)
     
     if request.method=='DELETE':
-        comment.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        if request.user == comment.user:
+            comment.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
     
     elif request.method=='PUT':
-        serializer = CommentSerializer(comment, data=request.data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return Response(serializer.data)
+        if request.user == comment.user:
+            serializer = CommentSerializer(comment, data=request.data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return Response(serializer.data)
 
 @api_view(['POST'])
 def comment_likes(request, comment_pk):
