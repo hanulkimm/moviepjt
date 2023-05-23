@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="universe">
     <router-link to="/">Main</router-link> |
     <router-link :to="{name:'signup'}">Signup</router-link> |
     <router-link :to="{name:'login'}">Login</router-link>
@@ -23,4 +23,18 @@
 
 
 <style>
+.universe{
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  background-image: url(@/assets/uni.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  height: 100vh;
+  width: 100vw;
+  overflow: auto;
+}
 </style>
