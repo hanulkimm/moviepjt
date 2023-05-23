@@ -26,14 +26,14 @@ export default {
     }
   },
   methods:{
-    clickRegion(event){
-      this.$emit('selectCity', event.target.title)
+    clickRegion(){
+      this.$emit('get-movie-list')
     },
     selectRegion(event){
-      this.$emit('selectCity', event.target.title)
+      this.$emit('select-city', event.target.title)
     },
     unselectRegion(){
-      this.$emit('unselectCity')
+      this.$emit('unselect-city')
     }
   },
   created(){
