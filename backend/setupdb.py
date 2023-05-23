@@ -159,7 +159,6 @@ def actor():
         if release_date:
             release_date = release_date[:4] + '-' + release_date[4:6] + '-' + release_date[6:]
 
-        URL = f'https://api.themoviedb.org/3/search/movie?api_key=5796ca45f3451bf2d68f3949e8f4c4de&language=ko&region=KR&query={movie_name}'
         response = requests.get(URL).json()
         results = response.get('results')
 
@@ -237,4 +236,4 @@ def movie_actor():
 
 ### Actor
 # actor()
-movie_actor()
+# movie_actor()
