@@ -6,23 +6,15 @@
         <area v-for="region in regions" :key="`${region.title}`" @mouseout="unselectRegion" @mouseover="selectRegion" @click="clickRegion" target="" :alt="region.title" :title="region.title" :coords="region.coords" shape="poly">
       </map>
     </div>
-    <div>
-      <h4><strong>영화 리스트</strong></h4>
-    </div>
-    <movieList :region="region"/>
   </div>
   
 </template>
 
 <script>
 import $ from 'jquery'
-import movieList from '@/components/movieList.vue'
 
 export default {
   name: 'MiddleMapView',
-  components:{
-    movieList,
-  },
   data(){
     return {
       region: this.$route.params.region,
@@ -35,13 +27,7 @@ export default {
   },
   methods:{
     clickRegion(event){
-      console.log(event.target.title)
       this.$emit('selectCity', event.target.title)
-      const payload = {
-        region: this.region,
-        city: event.target.title
-      }
-      this.$store.dispatch('getMovieList', payload)
     },
     selectRegion(event){
       this.$emit('selectCity', event.target.title)
