@@ -6,9 +6,12 @@
     <div class="">
       <div class="">
         <div class="mt-5 text-start ">
-          <p class="genre">장르 : 액션 로맨스 무협 공포</p>
-          <p>개봉일 : 2023-05-24</p>
-          <p>런타임 : 180분</p>
+          <p>
+            <span class="genre">장르 : </span>
+            <span v-for="genre in movie.genres" :key="genre.genre">{{genre.genre}}&nbsp;</span>
+          </p>
+          <p>개봉일 : {{releaseDate}}</p>
+          <p>런타임 : {{movie.runtime}}분</p>
         </div>
       </div>
     </div>
@@ -21,6 +24,10 @@ export default {
   computed:{
     movie(){
       return this.$store.state.movie
+    },
+    releaseDate(){
+      const release_date = this.$store.state.movie.release_date
+      return release_date.slice(0, 4)+'-'+release_date.slice(4,6)+'-'+release_date.slice(6,8)
     }
   }
 

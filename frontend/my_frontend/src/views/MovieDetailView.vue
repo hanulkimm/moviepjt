@@ -1,44 +1,44 @@
 <template>
 <div>
   <nav class="navbar navbar-dark bg-dark sticky-top">
-      <div class="container-fluid">
-        <img src="../assets/movie_icon.png" alt="">
-        <router-link class="big-link" @click.native="resetMovieList" to="/home">CineMap</router-link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-          <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Profile Page</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <div class="container-fluid">
+      <img src="../assets/movie_icon.png" alt="">
+      <router-link class="big-link" @click.native="resetMovieList" to="/home">CineMap</router-link>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Profile Page</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div class="profile">
+            <!-- <i class="fa-solid fa-user fa-2xl"></i>
+            <i class="fa-regular fa-user fa-2xl" style="color: #ffffff;"></i> -->
+            <img src="../assets/profile.jpg" class="profile-img" alt="Profile Image"><br>
+            <button>upload profile image </button>
+            <br><br>
+            <h3 class="profile-username">Hello, {{this.$store.state.username}}</h3>
+            <button @click="logout" type="button" class="btn btn-outline-danger btn-sm">LogOut</button>
           </div>
-          <div class="offcanvas-body">
-            <div class="profile">
-              <!-- <i class="fa-solid fa-user fa-2xl"></i>
-              <i class="fa-regular fa-user fa-2xl" style="color: #ffffff;"></i> -->
-              <img src="../assets/profile.jpg" class="profile-img" alt="Profile Image"><br>
-              <button>upload profile image </button>
-              <br><br>
-              <h3 class="profile-username">Hello, {{this.$store.state.username}}</h3>
-              <button @click="logout" type="button" class="btn btn-outline-danger btn-sm">LogOut</button>
-            </div>
-         </div>
         </div>
       </div>
-    </nav>
-  <div class="d-flex justify-content-center detail text-white">
-    <div class="movie-detail-view">
-      <div class="capa row">
-        <div class="col-1"></div>
-        <div class="main mb-4 col-4">
-          <movieSticky/>
+    </div>
+  </nav>
+  <div>
+    <div class="d-flex justify-content-center detail text-white" ref="detail">
+      <div class="movie-detail-view">
+        <div class="capa row">
+          <div class="col-1"></div>
+          <div class="main mb-4 col-4">
+            <movieSticky/>
+          </div>
+          <div class="mb-4 col-6">
+            <movieDetail/>
+          </div>
         </div>
-        <div class="mb-4 col-6">
-          <movieDetail/>
-        </div>
-
       </div>
-      
     </div>
   </div>
 </div>
@@ -77,6 +77,11 @@ export default {
       }
     console.log(params)
     this.$store.dispatch('getDetailMovie', params)
+  },
+  mounted(){
+    console.log('mount')
+    this.$refs['detail'].scrollIntoView()
+    window.scrollBy(0, 100)
   }
 }
 </script>

@@ -81,6 +81,7 @@
     <div class="justify-content-center" ref="movie-list">
       <div></div>
       <movieList/>
+      <div class="empty">.</div>
     </div>
   </div>
 </template>
@@ -162,6 +163,11 @@ export default {
 
 
 <style>
+.empty{
+  background-color: rgb(0, 0, 0);
+  opacity: 0%;
+  height: 200px;
+}
 
 .top{
   top: 150px;
