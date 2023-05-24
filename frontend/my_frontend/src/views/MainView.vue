@@ -14,10 +14,13 @@
           </div>
           <div class="offcanvas-body">
             <div class="profile">
-              <!-- <i class="fa-solid fa-user fa-2xl"></i>
-              <i class="fa-regular fa-user fa-2xl" style="color: #ffffff;"></i> -->
+              <!-- <b-avatar variant="danger"></b-avatar> -->
               <img src="../assets/profile.jpg" class="profile-img" alt="Profile Image"><br>
-              <button>change profile image </button>
+              <img v-if="imageFile" :src="getImageUrl" alt="Uploaded Image">
+
+              <input type="file" @change="handleFileUpload">
+
+              <!-- <button>change profile image </button> -->
               <br><br>
               <h3 class="profile-username">Hello, {{this.$store.state.username}}</h3>
               <button @click="logout" type="button" class="btn btn-outline-danger btn-sm">LogOut</button>
@@ -59,6 +62,7 @@
                           <option selected disabled value="">{{selectedCity}}</option>
                           <option v-for="city in cityList" :value="city.title" :key="city.title">{{city.title}}</option>
                         </select>
+                        <p></p>
                       </div>
                       <br>
                       <div class="form-button mt-3">
@@ -92,10 +96,15 @@ export default {
   data(){
     return {
       city: '',
-      scrollto: this.$refs["movie-list"]
+      scrollto: this.$refs["movie-list"],
+      imageFile:null,
     }
   },
   methods: {
+    handleFileUpload(event) {
+    const file = event.target.files[0];
+    this.imageFile = file; 
+  },
     logout(){
         this.$store.dispatch('logout')
       },
@@ -133,7 +142,14 @@ export default {
     },
     selectedCity(){
       return this.$store.state.selectedCity
+    },
+    getImageUrl() {
+    if (this.imageFile) {
+      return URL.createObjectURL(this.imageFile);
+    } else {
+      return null;
     }
+  }
   },
   created(){
     this.$store.commit('unselectCity')
