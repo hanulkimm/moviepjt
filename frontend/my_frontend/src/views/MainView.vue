@@ -1,5 +1,5 @@
 <template>
-  <div id="main">
+  <div id="main" ref="top">
     <nav class="navbar navbar-dark bg-dark sticky-top">
       <div class="container-fluid">
         <img src="../assets/movie_icon.png" alt="">
@@ -32,6 +32,10 @@
       <path d="M9.479 14.361c-.48.093-.98.139-1.479.139-.5 0-.999-.046-1.479-.139L7.6 15.8a.5.5 0 0 0 .8 0l1.079-1.439Z"/>
     </svg>
     <div class="home">
+      <div class="position-relative top">
+        <h3 class="movie-list text-center">{{state}} {{city}}</h3>
+        <h3 class="text-center"><strong>{{message}}</strong></h3>
+      </div>
       <div class="d-flex justify-content-center">
         <div class="map-space">
           <router-view @select-city="selectCity" @unselect-city="unselectCity" @get-movie-list="getMovieList"/>
@@ -71,9 +75,7 @@
     </div>
     <div class="justify-content-center" ref="movie-list">
       <div></div>
-      <h3 class="movie-list">{{state}} {{selectedCity}}</h3>
       <movieList/>
-      <h3><strong>{{message}}</strong></h3>
     </div>
   </div>
 </template>
@@ -98,13 +100,17 @@ export default {
         this.$store.dispatch('logout')
       },
     resetMovieList(){
+      this.$store.commit('unselectCity')
+      this.city = ''
       this.$store.dispatch('resetMovieList')
+      this.$refs["top"].scrollIntoView({ behavior: "smooth"})
     },
     getMovieList(){
       const payload = {
         state: this.state,
         city: this.city,
-        scrollto: this.$refs["movie-list"]
+        scrollto: this.$refs["movie-list"],
+        scrollToTop: this.$refs["top"]
       }
       this.$store.dispatch('getMovieList', payload)
     },
@@ -112,7 +118,7 @@ export default {
       this.city = city
     },
     unselectCity(){
-      this.city = ''
+      this.city = this.seletedCity != '' ? this.selectedCity:''
     },
   },
   computed: {
@@ -131,6 +137,7 @@ export default {
   },
   created(){
     this.$store.commit('unselectCity')
+    this.city = ''
   }
 }
 
@@ -138,6 +145,10 @@ export default {
 
 
 <style>
+.top{
+  top: 150px;
+}
+
 .profile {
   text-align: center;
   margin-bottom: 20px;
@@ -195,7 +206,7 @@ nav a.router-link-exact-active {
 }
 
 .map-space{
-  margin-top: 250px;
+  margin-top: 210px;
 }
 
 .form-holder {
@@ -235,6 +246,9 @@ nav a.router-link-exact-active {
     -webkit-transition: all 0.4s ease;
     transition: all 0.4s ease;
     height: 50vh;
+    max-width: 300px;
+    background-color: rgb(0, 0, 0);
+    opacity: 90%;
 }
 
 .form-content h3 {

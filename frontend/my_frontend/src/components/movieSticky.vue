@@ -5,11 +5,10 @@
     </div>
     <div class="">
       <div class="">
-        <div class="">
-          상세 정보
-          <p>genre</p>
-          <p>release_date</p>
-          <p>runtime</p>
+        <div class="mt-5 text-start ">
+          <p class="genre">장르 : 액션 로맨스 무협 공포</p>
+          <p>개봉일 : 2023-05-24</p>
+          <p>런타임 : 180분</p>
         </div>
       </div>
     </div>
@@ -29,5 +28,7 @@ export default {
 </script>
 
 <style>
-
+.genre{
+  max-width: 280px;
+}
 </style>
