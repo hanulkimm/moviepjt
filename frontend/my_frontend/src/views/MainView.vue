@@ -15,13 +15,15 @@
           </div>
           <div class="offcanvas-body">
             <div class="profile">
-              <!-- <b-avatar variant="danger"></b-avatar> -->
+              <!-- 프로필!!! -->
               <img src="../assets/profile.jpg" class="profile-img" alt="Profile Image"><br>
               <img v-if="imageFile" :src="getImageUrl" alt="Uploaded Image">
+              <!-- 업로두 -->
+            <label for="file-upload" class="file-upload">
+              Upload Profile
+              <input class="inputfile"  id="file-upload" type="file" style="display: none;" @change="handleFileUpload">
+            </label>
 
-              <input type="file" @change="handleFileUpload">
-
-              <!-- <button>change profile image </button> -->
               <br><br>
               <h3 class="profile-username">Hello, {{this.$store.state.username}}</h3>
               <button @click="logout" type="button" class="btn btn-outline-danger btn-sm">LogOut</button>
@@ -102,9 +104,17 @@ export default {
     }
   },
   methods: {
-    handleFileUpload(event) {
-    const file = event.target.files[0];
-    this.imageFile = file; 
+    handleFileUpload(e) {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = (event) => {
+        const url = event.target.result;
+        this.imageFile = url;
+        console.log(url);
+  };
+
+  reader.readAsDataURL(file);
   },
     logout(){
         this.$store.dispatch('logout')
@@ -146,7 +156,8 @@ export default {
     },
     getImageUrl() {
     if (this.imageFile) {
-      return URL.createObjectURL(this.imageFile);
+      console.log(this.imageFile);
+      return 
     } else {
       return null;
     }
@@ -162,7 +173,20 @@ export default {
 
 
 <style>
+  .file-upload {
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px 13px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    font-size: 13px;
+  }
 
+  .file-upload input[type="file"] {
+    display: none;
+  }
 .top{
   top: 150px;
 }
