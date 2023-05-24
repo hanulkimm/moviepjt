@@ -3,9 +3,7 @@
     <nav class="navbar navbar-dark bg-dark sticky-top">
       <div class="container-fluid">
         <img src="../assets/movie_icon.png" alt="">
-        <!-- <router-link to="/">Main</router-link> | -->
-        <router-link :to="{name:'signup'}">Signup</router-link> |
-        <router-link :to="{name:'login'}">Login</router-link> |
+        <router-link to="/">Main</router-link> |
         <p class="btn" @click="logout" >LogOut</p>
         <router-link @click.native="resetMovieList" to="/home">CineMap</router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
@@ -44,11 +42,9 @@
                     <h3>Register Today</h3>
                     <p>Fill in the data below.</p>
                     <form class="requires-validation" novalidate @submit.prevent="getMovieList">
-
                       <div class="col-md-12">
                         <input v-model="state" class="form-control" type="text" name="name" placeholder="행정구역" disabled required>
-\                      </div>
-
+                      </div>
                       <div class="col-md-12">
                         <select class="form-select mt-3" required v-model="city">
                           <option selected disabled value="">City</option>
@@ -109,6 +105,9 @@ export default {
     },
     unselectCity(){
       this.city = ''
+    },
+    logout(){
+      console.log('logout')
     }
   },
   computed: {

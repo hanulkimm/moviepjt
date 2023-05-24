@@ -256,6 +256,7 @@ export default new Vuex.Store({
       state.selectedCity = ''
     },
     getDetailMovie(state, payload){
+      console.log(state.movie)
       state.movie = payload
     },
     SAVE_TOKEN(state, token){

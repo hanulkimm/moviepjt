@@ -1,8 +1,8 @@
 <template>
   <div class="universe">
-    <!-- <router-link to="/">Main</router-link> | -->
-        <router-link :to="{name:'signup'}">Signup</router-link> |
-        <router-link :to="{name:'login'}">Login</router-link> |
+    <router-link to="/">Main</router-link> |
+      <router-link :to="{name:'signup'}">Signup</router-link> |
+      <router-link :to="{name:'login'}">Login</router-link> |
     <router-view></router-view>
   </div>
 </template>
