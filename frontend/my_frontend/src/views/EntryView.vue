@@ -49,7 +49,7 @@ export default {
 }
 .text-container h1 {
   color: aliceblue;
-  font-size: 30px;
+  font-size: 50px;
   margin-bottom: 10px;
 }
 
