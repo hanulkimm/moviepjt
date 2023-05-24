@@ -1,7 +1,6 @@
 <template>
   <div>
     <div>
-      review list
     </div>
     <div>
       <form id="myform" @submit.prevent="createReview">
@@ -27,7 +26,8 @@ export default {
   data(){
     return {
       value: 0,
-      content: ''
+      content: '',
+      reviews: []
     }
   },
   props:{
@@ -38,7 +38,8 @@ export default {
       method: 'get',
       url: `http://127.0.0.1:8000/api/v1/movies/${this.movie_pk}/commentlist/`
     }).then(res => {
-      console.log(res)
+      this.reviews = res.data
+      console.log(this.reviews)
     })
   },
   methods:{
@@ -55,6 +56,14 @@ export default {
         }
       }).then(res => {
         console.log(res)
+      }).then(() => {
+        axios({
+          method: 'get',
+          url: `http://127.0.0.1:8000/api/v1/movies/${this.movie_pk}/commentlist/`
+        }).then(res => {
+          this.reviews = res.data
+          console.log(this.reviews)
+        })
       }).catch(err => {
         console.log(err)
       })
@@ -63,7 +72,6 @@ export default {
       this.value = event.target.value
     }
   }
-
 }
 </script>
 
@@ -93,4 +101,5 @@ export default {
 #myform input[type=radio]:checked ~ label{
     text-shadow: 0 0 0 rgb(232, 247, 31); /* 마우스 클릭 체크 */
 }
+
 </style>
