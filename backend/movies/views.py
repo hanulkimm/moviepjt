@@ -90,6 +90,8 @@ def movie_detail(request, movie_pk, state):
     location_details = LocationDetail.objects.filter(movie=movie, location__state=state)
     serializer = MovieLocationDetailSerializer(movie)
     data = serializer.data
+    location_details_count = location_details.count()
     data['location_details'] = LocationDetailSerializer(location_details, many=True).data
+    data['location_details_count'] = location_details_count
 
     return Response(data)
