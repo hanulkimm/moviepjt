@@ -8,10 +8,10 @@ class GenreSerializer(serializers.ModelSerializer):
         exclude = ['id',]
 
 class MovieSerializer(serializers.ModelSerializer):
-    genres = GenreSerializer(many=True)
+    # genres = GenreSerializer(many=True)
     class Meta:
         model = Movies
-        fields = ['id','genres','release_date','director_name','movie_title','nation','plot','runtime','rating','keywords','poster']
+        fields = ['id','movie_title','poster']
 
 class LocationSerializer(serializers.ModelSerializer):
     movies = MovieSerializer(many=True)
