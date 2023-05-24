@@ -1,9 +1,12 @@
 <template>
   <div class="mt-5 text-start">
     <h3>{{movie.movie_title}}</h3>
-    <div class="">
-      <p>촬영 장소</p>
-      <p v-for="location in movie.location_details" :key="location.place">{{location.place}}</p>
+    <div class="mt-5">
+      <div class="mb-3">
+        <h4>촬영 장소</h4>
+      </div>
+      <p v-for="location in movie.location_details" :key="location.place">- {{location.place}}</p>
+      <p><a href="">- 더보기</a></p>
     </div>
     <div class="d-flex align-items-center justify-content-center">
       <video 
@@ -17,6 +20,7 @@
     <div class="">
       <div class="detail">
         <h3>줄거리</h3>
+        <hr>
         <div class="plot">
           {{movie.plot}}
         </div>
@@ -57,7 +61,6 @@ export default {
   components:{
     reviewList
   }
-
 }
 </script>
 

@@ -54,6 +54,7 @@ export default {
     });
     this.$store.dispatch('resetMovieList')
     this.$store.commit('unselectState')
+    this.$store.commit('unselectCity')
   }
 }
 </script>

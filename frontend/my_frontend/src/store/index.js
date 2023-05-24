@@ -345,18 +345,39 @@ export default new Vuex.Store({
   actions: {
     getMovieList(context, payload){
       context.commit('selectCity', payload.city)
-      axios({
-        method: 'get',
-        url: `http://127.0.0.1:8000/api/v1/movies/location/${payload.state}/${payload.city}/`,
-      }).then(res => {
-        context.commit('setMovieList', res.data.movies)
-        context.commit('setMessage', {message: '', scrollto: payload.scrollto})
-      }).then(() => {
-        payload.scrollto.scrollIntoView({ behavior: "smooth"})
-      }).catch(err => {
-        context.commit('setMessage', {message: '촬영된 영화가 없습니다.', scrollto: payload.scrollto})
-        console.log(err)
-      })
+      let URL
+      if (payload.city == '') {
+        URL = `http://127.0.0.1:8000/api/v1/movies/location/${payload.state}/`
+        axios({
+          method: 'get',
+          url: URL,
+        }).then(res => {
+          context.commit('setMovieList', res.data)
+          context.commit('setMessage', {message: '', scrollto: payload.scrollto})
+        }).then(() => {
+          payload.scrollto.scrollIntoView({ behavior: "smooth"})
+        }).catch(err => {
+          context.commit('setMessage', {message: '촬영된 영화가 없습니다.', scrollto: payload.scrollToTop})
+          context.commit('resetMovieList')
+          console.log(err)
+        })
+      }
+      else{
+        URL = `http://127.0.0.1:8000/api/v1/movies/location/${payload.state}/${payload.city}/`
+        axios({
+          method: 'get',
+          url: URL,
+        }).then(res => {
+          context.commit('setMovieList', res.data.movies)
+          context.commit('setMessage', {message: '', scrollto: payload.scrollto})
+        }).then(() => {
+          payload.scrollto.scrollIntoView({ behavior: "smooth"})
+        }).catch(err => {
+          context.commit('setMessage', {message: '촬영된 영화가 없습니다.', scrollto: payload.scrollToTop})
+          context.commit('resetMovieList')
+          console.log(err)
+        })
+      }
     },
     resetMovieList(context){
       context.commit('resetMovieList')
