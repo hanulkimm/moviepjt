@@ -51,7 +51,7 @@
                       </div>
                       <div class="col-md-12">
                         <select class="form-select mt-3" required v-model="city">
-                          <option selected disabled value="">City</option>
+                          <option selected disabled value="">{{selectedCity}}</option>
                           <option v-for="city in cityList" :value="city.title" :key="city.title">{{city.title}}</option>
                         </select>
                       </div>
@@ -70,7 +70,7 @@
     </div>
     <div class="justify-content-center" ref="movie-list">
       <div></div>
-      <h3 class="movie-list">{{state}} {{city}}</h3>
+      <h3 class="movie-list">{{state}} {{selectedCity}}</h3>
       <movieList/>
       <h3><strong>{{message}}</strong></h3>
     </div>
@@ -123,8 +123,14 @@ export default {
     },
     message(){
       return this.$store.state.message
+    },
+    selectedCity(){
+      return this.$store.state.selectedCity
     }
   },
+  created(){
+    this.$store.commit('unselectCity')
+  }
 }
 
 </script>

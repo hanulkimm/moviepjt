@@ -17,7 +17,7 @@ export default {
   name: 'MiddleMapView',
   data(){
     return {
-      region: this.$route.params.region,
+      region: this.$store.state.state,
     }
   },
   computed:{
@@ -42,6 +42,8 @@ export default {
         fillColor: 'ff0000',
       });
     });
+    this.region = this.$route.params.region
+    this.$store.commit('selectState', this.region)
   }
 }
 </script>

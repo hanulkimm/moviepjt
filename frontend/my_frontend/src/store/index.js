@@ -331,13 +331,16 @@ export default new Vuex.Store({
     selectCity(state, payload){
       state.selectedCity = payload
     },
+    unselectCity(state){
+      state.selectedCity = 'City'
+    },
     LOG_OUT(state){
       localStorage.removeItem('token')
       state.token=null
       localStorage.removeItem('username')
       state.username = null
       router.push({name:'entry'})
-    }
+    },
   },
   actions: {
     getMovieList(context, payload){
