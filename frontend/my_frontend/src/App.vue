@@ -1,5 +1,5 @@
 <template>
-  <div class="universe">
+  <div class="universe" ref="app">
     <router-view></router-view>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -39,6 +39,10 @@
       movie(){
         return this.$store.state.movie
       }
+    },
+    mounted(){
+      this.$store.commit('setAppTop', this.$refs['app'])
+      console.log(this.$refs['app'])
     }
   }
 </script>
