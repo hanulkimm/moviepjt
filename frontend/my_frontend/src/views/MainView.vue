@@ -83,6 +83,7 @@
     <div class="justify-content-center" ref="movie-list">
       <div></div>
       <movieList/>
+      <div class="empty">.</div>
     </div>
   </div>
 </template>
@@ -173,6 +174,7 @@ export default {
 
 
 <style>
+
   .file-upload {
     display: inline-block;
     border: 1px solid #ccc;
@@ -183,6 +185,13 @@ export default {
     text-decoration: none;
     font-size: 13px;
   }
+
+.empty{
+  background-color: rgb(0, 0, 0);
+  opacity: 0%;
+  height: 200px;
+}
+
 
   .file-upload input[type="file"] {
     display: none;

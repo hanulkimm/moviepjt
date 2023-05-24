@@ -1,5 +1,6 @@
 <template>
-  <div class="mt-5 text-start">
+  <div class="mt-5 text-start" ref="detail">
+    <div class="empty"></div>
     <h3>{{movie.movie_title}}</h3>
     <div class="mt-5">
       <div class="mb-3">
@@ -75,13 +76,22 @@ export default {
     reviewList
   },
   methods:{
-    }
+  },
+  mounted(){
+    this.$refs['detail'].scrollIntoView({ behavior: "smooth"})
   }
-
+}
 </script>
 
 <style>
 .plot{
   text-indent: 10px;
+}
+
+.empty{
+  background-color: rgb(0, 0, 0);
+  opacity: 0%;
+  height: 100px;
+
 }
 </style>

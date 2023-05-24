@@ -292,10 +292,14 @@ export default new Vuex.Store({
     state: '행정구역을 선택해주세요',
     message: '',
     selectedCity: '',
+    appTop: null
   },
   getters: {
   },
   mutations: {
+    setAppTop(state, payload){
+      state.appTop = payload
+    },
     setMovieList(state, payload){
       state.movieList = payload
     },
