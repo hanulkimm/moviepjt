@@ -55,11 +55,18 @@ def comment_likes(request, comment_pk):
     
 
 
-# 행정구역에 따른 영화 리스트 출력    
+# 행정구역& 시군구에 따른 영화 리스트 출력    
 @api_view(['GET'])
 def location_movies(request, state, city):
     location = get_object_or_404(Location, state=state, city=city)
     serializer = LocationSerializer(location)
+    return Response(serializer.data)
+
+# 행정구역에 따른 영화 리스트 출력
+@api_view(['GET'])
+def state_location_movies(request, state):
+    location = get_list_or_404(Location, state=state)
+    serializer = LocationSerializer(location, many=True)
     return Response(serializer.data)
 
 # 특정 영화 detail 

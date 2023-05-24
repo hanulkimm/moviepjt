@@ -35,5 +35,5 @@ class MovieLocationDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movies
         # exclude = ['kmdb_id','tmdb_id','kmdb_seq']
-        fields = ['genres','actors','comment_set','release_date','director_name','movie_title','nation','plot','runtime','rating','keywords','poster','location_details']
+        fields = ['genres','actors','comment_set','release_date','director_name','movie_title','nation','plot','runtime','rating','keywords','poster','teaser','location_details',]
 
