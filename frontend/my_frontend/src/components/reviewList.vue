@@ -39,7 +39,6 @@ export default {
       url: `http://127.0.0.1:8000/api/v1/movies/${this.movie_pk}/commentlist/`
     }).then(res => {
       this.reviews = res.data
-      console.log(this.reviews)
     })
   },
   methods:{
@@ -62,7 +61,6 @@ export default {
           url: `http://127.0.0.1:8000/api/v1/movies/${this.movie_pk}/commentlist/`
         }).then(res => {
           this.reviews = res.data
-          console.log(this.reviews)
         })
       }).catch(err => {
         console.log(err)

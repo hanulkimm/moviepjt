@@ -4,11 +4,18 @@
     <div class="mt-5">
       <div class="mb-3">
         <h4>촬영 장소</h4>
+        <hr>
       </div>
-      <p v-for="location in movie.location_details" :key="location.place">- {{location.place}}</p>
-      <p><a href="">- 더보기</a></p>
+      <p v-for="(a,i) in showReviewCnt" :key="i">- {{movie.location_details[i].place}}</p>
+      <button v-if="reviewCnt > 3" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        더보기
+      </button>
     </div>
-    <div class="d-flex align-items-center justify-content-center">
+    <div class="align-items-center justify-content-center mt-5">
+      <div>
+        <h4>티저 영상</h4>
+        <hr>
+      </div>
       <video 
         :src="movie.teaser"
         controls
@@ -56,12 +63,21 @@ export default {
   computed: {
     movie(){
       return this.$store.state.movie
+    },
+    reviewCnt(){
+      return this.movie.location_details_count
+    },
+    showReviewCnt(){
+      return this.reviewCnt > 3 ? 3:this.reviewCnt
     }
   },
   components:{
     reviewList
+  },
+  methods:{
+    }
   }
-}
+
 </script>
 
 <style>
