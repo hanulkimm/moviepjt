@@ -24,6 +24,7 @@ export default {
   name: 'MovieDetailView',
   data(){
     return {
+      movie: this.$store.state.movie
     }
   },
   components:{
@@ -31,9 +32,15 @@ export default {
     movieDetail
   },
   computed:{
-    movie(){
-      return this.$store.state.movie
-    }
+
+  },
+  created(){
+    const params = {
+        region: this.$route.params.region, 
+        movie_pk: this.$route.params.movie_pk
+      }
+    console.log(params)
+    this.$store.dispatch('getDetailMovie', params)
   }
 }
 </script>

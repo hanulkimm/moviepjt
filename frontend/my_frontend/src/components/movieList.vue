@@ -26,8 +26,6 @@ export default {
         region: this.$store.state.state, 
         movie_pk: event.target.id
       }
-      console.log(params)
-      this.$store.dispatch('getDetailMovie', params)
       this.$router.push({name: 'movie', params})
     }
 
