@@ -1,20 +1,24 @@
 <template>
 <div>
+  <div class="scroll-to-top" @click.prevent="scrollToTop">
+    <font-awesome-icon
+      :icon="['fas', 'circle-up']"
+      style="color: #ffffff; font-size: 50px; cursor: pointer;"
+    />
+  </div>
   <nav class="navbar navbar-dark bg-dark sticky-top">
+    <div class="container-fluid">
+      <img src="../assets/movie_icon.png" alt="">
+      <router-link class="big-link" @click.native="resetMovieList" to="/home">CineMap</router-link>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+        <font-awesome-icon :icon="['fas', 'user']" size="xl" style="color: #ffffff;" />
+      </button>
+      <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Profile Page</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 
-      <div class="container-fluid">
-        <img src="../assets/movie_icon.png" alt="">
-        <router-link class="big-link" @click.native="resetMovieList" to="/home">CineMap</router-link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-          <font-awesome-icon :icon="['fas', 'user']" size="xl" style="color: #ffffff;" />
-        </button>
-        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-          <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Profile Page</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-
-    
-        </div>
+    </div>
         <div class="offcanvas-body">
           <div class="profile">
             <!-- <i class="fa-solid fa-user fa-2xl"></i>
@@ -48,6 +52,10 @@
 </template>
 
 <script>
+// 스크롤 업 
+// import {gsap} from 'gsap';
+// import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
+
 import movieSticky from '../components/movieSticky.vue'
 import movieDetail from '../components/movieDetail.vue'
 
@@ -64,11 +72,19 @@ export default {
       },
     resetMovieList(){
       this.$store.dispatch('resetMovieList')
-    }
+    },
+    // scroll up
+    // scrollToTop() {
+    //   console.log('hiiii')
+    //   gsap.to(window, 0.7,{
+    //     scrollTo:0
+    //   });
+    // },
+    
   },
   components:{
     movieSticky,
-    movieDetail
+    movieDetail,
   },
   computed:{
 
@@ -80,16 +96,26 @@ export default {
       }
     console.log(params)
     this.$store.dispatch('getDetailMovie', params)
+
   },
   mounted(){
     console.log('mount')
     this.$refs['detail'].scrollIntoView()
     window.scrollBy(0, 100)
+    // scroll up
+    // gsap.registerPlugin(ScrollToPlugin);
   }
 }
 </script>
 
 <style>
+.scroll-to-top {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  z-index: 999;
+}
+
 .big-link {
   font-size: 2em; 
   text-decoration: none; 
