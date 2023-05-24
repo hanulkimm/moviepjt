@@ -4,20 +4,24 @@
       <div class="container-fluid">
         <img src="../assets/movie_icon.png" alt="">
         <router-link to="/">Main</router-link> |
-        <p class="btn" @click="logout" >LogOut</p>
         <router-link @click.native="resetMovieList" to="/home">CineMap</router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
           <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Profile</h5>
+            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Profile Page</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
           <div class="offcanvas-body">
             <div class="profile">
-              <img src="" class="profile-img" alt="Profile Image">
-              <h3 class="profile-username">{{this.$store.state.username}}</h3>
+              <!-- <i class="fa-solid fa-user fa-2xl"></i>
+              <i class="fa-regular fa-user fa-2xl" style="color: #ffffff;"></i> -->
+              <img src="../assets/profile.jpg" class="profile-img" alt="Profile Image"><br>
+              <button>upload profile image </button>
+              <br><br>
+              <h3 class="profile-username">Hello, {{this.$store.state.username}}</h3>
+              <button @click="logout" type="button" class="btn btn-outline-danger btn-sm">LogOut</button>
             </div>
          </div>
         </div>
@@ -89,6 +93,9 @@ export default {
     }
   },
   methods: {
+    logout(){
+        this.$store.dispatch('logout')
+      },
     resetMovieList(){
       this.$store.dispatch('resetMovieList')
     },
@@ -106,9 +113,6 @@ export default {
     unselectCity(){
       this.city = ''
     },
-    logout(){
-      console.log('logout')
-    }
   },
   computed: {
     cityList(){

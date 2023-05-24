@@ -23,7 +23,7 @@
               </div>
               <div class="error-message" v-if="this.loginTry && !this.$store.state.token" >로그인 정보가 올바르지 않습니다 </div>
               <br>
-              
+               
               <p>CineMap 회원이 아니신가요? <router-link :to="{name:'signup'}">지금 바로 가입해보세요!</router-link>  </p>
               <div class="form-button mt-3">
                 <button id="submit" type="submit" class="btn btn-primary">Login</button>

@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    username :null,
+    username : localStorage.getItem('username'),
     token:localStorage.getItem('token'),
     regions: {
       강원도: [
@@ -314,6 +314,7 @@ export default new Vuex.Store({
     },
     SAVE_USERNAME(state, username){
       state.username = username
+      localStorage.setItem('username', username)
     },
     selectState(state, payload){
       state.state = payload
@@ -333,6 +334,9 @@ export default new Vuex.Store({
     LOG_OUT(state){
       localStorage.removeItem('token')
       state.token=null
+      localStorage.removeItem('username')
+      state.username = null
+      router.push({name:'entry'})
     }
   },
   actions: {
