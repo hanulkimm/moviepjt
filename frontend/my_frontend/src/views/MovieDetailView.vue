@@ -3,8 +3,7 @@
   <nav class="navbar navbar-dark bg-dark sticky-top">
       <div class="container-fluid">
         <img src="../assets/movie_icon.png" alt="">
-        <router-link to="/">Main</router-link> |
-        <router-link @click.native="resetMovieList" to="/home">CineMap</router-link>
+        <router-link> @click.native="resetMovieList" to="/home">CineMap</router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -54,6 +53,14 @@ export default {
   data(){
     return {
       movie: this.$store.state.movie
+    }
+  },
+  methods:{
+    logout(){
+        this.$store.dispatch('logout')
+      },
+    resetMovieList(){
+      this.$store.dispatch('resetMovieList')
     }
   },
   components:{
