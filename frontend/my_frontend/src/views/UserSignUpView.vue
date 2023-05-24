@@ -5,10 +5,9 @@
         <div class="form-content">
           <div class="form-items">
             <h3>회원가입</h3>
+            
             <p>아이디로 간편하게 CineMap을 시작하세요! </p>
-            <p>이미 회원이신가요? <router-link :to="{name:'login'}">LOGIN</router-link> </p>
-
-
+            
             <form @submit.prevent='signUp' class="requires-validation" novalidate>
 
               <div class="col-md-12">
@@ -34,9 +33,9 @@
                 <div class="error-message" v-if="matchError">비밀번호가 일치하지 않습니다.</div>
               </div>
               <br>
-
+              <p>이미 회원이신가요? <router-link :to="{name:'login'}">LOGIN</router-link> </p>
               <div class="form-button mt-3">
-                <button id="submit" type="submit" class="btn btn-primary">Register</button>
+                <button id="submit" type="submit" class="btn btn-primary">SignUp</button>
               </div>
             </form>
           </div>

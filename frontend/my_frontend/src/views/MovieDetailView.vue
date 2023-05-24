@@ -96,6 +96,7 @@ export default {
 .plot{
   overflow: auto;
 }
+
 .profile-content .profile-items {
     border: 3px solid #fff;
     padding: 20px;
