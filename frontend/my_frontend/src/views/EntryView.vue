@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="text-container">
-      <h1>Welcome to CineMap</h1>
-      <p>Click on the image to continue</p>
+      <h1>Welcome to <span>CineMap</span> </h1>
+      <p>Click the globe to continue</p>
     </div>
     <img @click="goToLogin" src="../assets/earthImg.png" class="earth" alt="">
   </div>
@@ -44,14 +44,16 @@ export default {
   left: 50%;
   transform: translateX(-50%);
 }
-
+.text-container span {
+  color:crimson
+}
 .text-container h1 {
   color: aliceblue;
-  font-size: 24px;
+  font-size: 30px;
   margin-bottom: 10px;
 }
 
 .text-container p {
-  font-size: 14px;
+  font-size: 17px;
 }
 </style>

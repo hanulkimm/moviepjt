@@ -43,21 +43,23 @@
               <div class="form-holder">
                 <div class="form-content">
                   <div class="form-items">
-                    <h3>Register Today</h3>
-                    <p>Fill in the data below.</p>
+                    <h3>영화 로케이션 촬영 장소를 바탕으로 영화 추천 받기</h3>
+                    <br>
+                    <p>지도를 눌러서 빈칸을 채워주세요! </p>
                     <form class="requires-validation" novalidate @submit.prevent="getMovieList">
                       <div class="col-md-12">
                         <input v-model="state" class="form-control" type="text" name="name" placeholder="행정구역" disabled required>
                       </div>
+                      <br>
                       <div class="col-md-12">
                         <select class="form-select mt-3" required v-model="city">
                           <option selected disabled value="">City</option>
                           <option v-for="city in cityList" :value="city.title" :key="city.title">{{city.title}}</option>
                         </select>
                       </div>
-
+                      <br>
                       <div class="form-button mt-3">
-                        <button id="submit" type="submit" class="btn btn-primary">Register</button>
+                        <button id="submit" type="submit" class="btn btn-primary">영화 추천 받기</button>
                       </div>
                     </form>
                   </div>
