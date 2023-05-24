@@ -332,7 +332,7 @@ export default new Vuex.Store({
       state.selectedCity = payload
     },
     unselectCity(state){
-      state.selectedCity = 'City'
+      state.selectedCity = ''
     },
     LOG_OUT(state){
       localStorage.removeItem('token')
