@@ -6,10 +6,12 @@ from rest_framework.permissions import IsAuthenticated
 
 from rest_framework import status
 from django.shortcuts import get_object_or_404, get_list_or_404
-from .serializers.movie_location import LocationSerializer
+from .serializers.movie_location import LocationSerializer,MovieSerializer
 from .serializers.movie_comment import CommentSerializer
 from .serializers.movie_detail import MovieLocationDetailSerializer,LocationDetailSerializer
 from .models import Movies, Comment, Location, LocationDetail
+
+from django.db.models import Prefetch
 # Create your views here.
  
 
@@ -65,8 +67,20 @@ def location_movies(request, state, city):
 # 행정구역에 따른 영화 리스트 출력
 @api_view(['GET'])
 def state_location_movies(request, state):
-    location = get_list_or_404(Location, state=state)
-    serializer = LocationSerializer(location, many=True)
+    locations = Location.objects.filter(state=state).prefetch_related(
+        Prefetch('movies', queryset=Movies.objects.distinct(), to_attr='unique_movies')
+    )
+    distinct_movies = set()
+    for location in locations:
+        distinct_movies.update(location.unique_movies)
+    # response_data = {
+    #     'state': state,
+    #     'movies': list(distinct_movies)
+    # }
+    # return Response(response_data)
+    serializer = MovieSerializer(distinct_movies, many=True)
+    # location = get_list_or_404(Location, state=state)
+    # serializer = LocationSerializer(locations, many=True)
     return Response(serializer.data)
 
 # 특정 영화 detail 
