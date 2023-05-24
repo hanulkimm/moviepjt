@@ -52,6 +52,8 @@ export default {
         fillColor: 'ff0000',
       });
     });
+    this.$store.dispatch('resetMovieList')
+    this.$store.commit('unselectState')
   }
 }
 </script>
