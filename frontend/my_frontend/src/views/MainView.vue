@@ -148,7 +148,7 @@ export default {
 
 .top{
   top: 150px;
-
+}
 .big-link {
   font-size: 3em; 
   color:#6891b4;
