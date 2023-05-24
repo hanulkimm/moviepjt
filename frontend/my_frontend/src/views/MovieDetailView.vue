@@ -3,7 +3,7 @@
   <nav class="navbar navbar-dark bg-dark sticky-top">
       <div class="container-fluid">
         <img src="../assets/movie_icon.png" alt="">
-        <router-link> @click.native="resetMovieList" to="/home">CineMap</router-link>
+        <router-link class="big-link" @click.native="resetMovieList" to="/home">CineMap</router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -82,6 +82,11 @@ export default {
 </script>
 
 <style>
+.big-link {
+  font-size: 2em; 
+  text-decoration: none; 
+}
+
 .detail{
   margin-top: 100px;
 }
