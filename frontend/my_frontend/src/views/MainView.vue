@@ -9,7 +9,7 @@
     <nav class="navbar navbar-dark bg-dark sticky-top">
       <div class="container-fluid">
         <img src="../assets/movie_icon.png" alt="">
-        <router-link class="big-link " @click.native="resetMovieList" to="/home">CineMap</router-link>
+        <router-link class="big-link " @click.native="resetMovieList" to="/home">C<font-awesome-icon :icon="['fas', 'map-pin']" />neMap</router-link>
         <button @click="profile" class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
           <font-awesome-icon :icon="['fas', 'user']" size="xl" style="color: #ffffff;" />
           <!-- <span class="navbar-toggler-icon"></span> -->
@@ -27,15 +27,13 @@
               <br><br>
               <!-- 업로두 -->
             <label for="file-upload" class="file-upload">
-              Upload File
+              Change Profile
               <input class="inputfile"  id="file-upload" type="file" style="display: none;" @change="handleFileUpload">
             </label>
             <br>
-              <button @click="profile" class="btn btn-outline-success btn-sm">Submit</button>
-
               <br><br>
               <h3 class="profile-username">Hello, {{this.$store.state.username}}</h3>
-              <button @click="logout" type="button" class="btn btn-outline-danger btn-sm">LogOut</button>
+              <button style="position: fixed; bottom: 50px; right: 150px;" @click="logout" type="button" class="btn btn-outline-danger btn-sm">LogOut</button>
             </div>
          </div>
         </div>
@@ -55,10 +53,9 @@
               <div class="form-holder">
                 <div class="form-content">
                   <div class="form-items">
-                    <h3>영화 로케이션 촬영 장소를 바탕으로 영화 추천 받기</h3>
+                    <h3>로케이션 촬영 장소로 영화 추천 받기</h3>
                     <br>
-                    <p>지도를 눌러서 빈칸을 채워주세요! <br>
-                      2번째 칸을 채우지 않아도 추천받을 수 있어요!</p>
+                    <p>지도를 눌러서 빈칸을 채워주세요!</p>
 
                     <form class="requires-validation" novalidate @submit.prevent="getMovieList">
                       <div class="col-md-12">
@@ -126,22 +123,22 @@ export default {
         'Content-Type': 'multipart/form-data',
         'Authorization': `Token ${token}`
           }
-        };
-
-        axios.post('http://127.0.0.1:8000/accounts/profile/1/', formData, config)
-          .then(res => {
-            console.log(res);
-            console.log('File uploaded successfully.');
+      };
+      const username = this.$store.state.username
+      axios.post(`http://127.0.0.1:8000/accounts/profile/${username}/`, formData, config)
+        .then(() => {
+          console.log('File uploaded successfully.');
+          axios({
+            method:'get',
+            url: `http://127.0.0.1:8000/accounts/getprofile/${username}/`
           })
-          .then(()=>{
-            this.$store.dispatch('getProfile')
-          }).then(() => {
-            this.getImageUrl = this.$store.state.profile
-            console.log(this.getImageUrl)
+          .then(res=>{
+            console.log('got profile url')
+            const profile = res.data.profile
+            this.getImageUrl =  'http://127.0.0.1:8000' + profile
+            this.$store.commit('SAVE_PROFILE', profile)
           })
-          .catch(err => console.log(err));
-        // 보내고 받아주기
-        
+        })
       },
     logout(){
         this.$store.dispatch('logout')
@@ -208,6 +205,7 @@ export default {
   text-decoration: none;
   font-size: 13px;
 }
+
 
 .file-upload input[type="file"] {
   display: none;

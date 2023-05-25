@@ -10,7 +10,7 @@ class MovieSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model= User
-        fields = ('username',)
+        fields = ('username','nickname',)
 
 class CommentSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
@@ -25,5 +25,9 @@ class CommentSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data['user'] = data['user']['username']
+        # data['user'] = data['user']['username']
+        data['user'] = {
+            'username' : data['user']['username'],
+            'nickname' : instance.user.nickname
+        }
         return data

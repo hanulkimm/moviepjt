@@ -6,33 +6,39 @@
       style="color: #ffffff; font-size: 50px; cursor: pointer;"
     />
   </div>
-  <nav class="navbar navbar-dark bg-dark sticky-top">
-    <div class="container-fluid">
-      <img src="../assets/movie_icon.png" alt="">
-      <router-link class="big-link" @click.native="resetMovieList" to="/home">CineMap</router-link>
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
-        <font-awesome-icon :icon="['fas', 'user']" size="xl" style="color: #ffffff;" />
-      </button>
-      <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Profile Page</h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-
-    </div>
-        <div class="offcanvas-body">
-          <div class="profile">
-            <!-- <i class="fa-solid fa-user fa-2xl"></i>
-            <i class="fa-regular fa-user fa-2xl" style="color: #ffffff;"></i> -->
-            <img src="../assets/profile.jpg" class="profile-img" alt="Profile Image"><br>
-            <button>upload profile image </button>
-            <br><br>
-            <h3 class="profile-username">Hello, {{this.$store.state.username}}</h3>
-            <button @click="logout" type="button" class="btn btn-outline-danger btn-sm">LogOut</button>
+    <nav class="navbar navbar-dark bg-dark sticky-top">
+      <div class="container-fluid">
+        <img src="../assets/movie_icon.png" alt="">
+        <router-link class="big-link " @click.native="resetMovieList" to="/home">C<font-awesome-icon :icon="['fas', 'map-pin']" />neMap</router-link>
+        <button @click="profile" class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+          <font-awesome-icon :icon="['fas', 'user']" size="xl" style="color: #ffffff;" />
+          <!-- <span class="navbar-toggler-icon"></span> -->
+        </button>
+        <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Profile Page</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
           </div>
+          <div class="offcanvas-body">
+            <div class="profile">
+              <!-- 프로필!!! -->
+              <!-- <img src="../assets/profile.jpg" class="profile-img" alt="Profile Image"><br> -->
+              <img :src="getImageUrl" alt="Uploaded Image">
+              <br><br>
+              <!-- 업로두 -->
+            <label for="file-upload" class="file-upload">
+              Change Profile
+              <input class="inputfile"  id="file-upload" type="file" style="display: none;" @change="handleFileUpload">
+            </label>
+            <br>
+              <br><br>
+              <h3 class="profile-username">Hello, {{this.$store.state.username}}</h3>
+              <button style="position: fixed; bottom: 50px; right: 150px;" @click="logout" type="button" class="btn btn-outline-danger btn-sm">LogOut</button>
+            </div>
+         </div>
         </div>
       </div>
-    </div>
-  </nav>
+    </nav>
   <div>
     <div class="d-flex justify-content-center detail text-white" ref="detail">
       <div class="movie-detail-view">
@@ -52,10 +58,7 @@
 </template>
 
 <script>
-// 스크롤 업 
-// import {gsap} from 'gsap';
-// import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
-
+import axios from 'axios'
 import movieSticky from '../components/movieSticky.vue'
 import movieDetail from '../components/movieDetail.vue'
 
@@ -63,10 +66,43 @@ export default {
   name: 'MovieDetailView',
   data(){
     return {
-      movie: this.$store.state.movie
+      movie: this.$store.state.movie,
+      getImageUrl:null,
     }
   },
   methods:{
+    profile(){
+      this.getImageUrl = this.$store.state.profile
+    },
+    handleFileUpload(e) {
+      const file = e.target.files[0];
+
+      const formData = new FormData()
+      formData.append('profile_url', file)
+      // console.log(formData)
+      const token = this.$store.state.token
+      const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Token ${token}`
+          }
+      };
+      const username = this.$store.state.username
+      axios.post(`http://127.0.0.1:8000/accounts/profile/${username}/`, formData, config)
+        .then(() => {
+          console.log('File uploaded successfully.');
+          axios({
+            method:'get',
+            url: `http://127.0.0.1:8000/accounts/getprofile/${username}/`
+          })
+          .then(res=>{
+            console.log('got profile url')
+            const profile = res.data.profile
+            this.getImageUrl =  'http://127.0.0.1:8000' + profile
+            this.$store.commit('SAVE_PROFILE', profile)
+          })
+        })
+      },
     logout(){
         this.$store.dispatch('logout')
       },
@@ -93,19 +129,33 @@ export default {
       }
     console.log(params)
     this.$store.dispatch('getDetailMovie', params)
-
+    this.$store.dispatch('getProfile')
   },
   mounted(){
     console.log('mount')
     this.$refs['movie-detail'].scrollIntoView()
     window.scrollBy(0, 100)
-    // scroll up
-    // gsap.registerPlugin(ScrollToPlugin);
   }
 }
 </script>
 
 <style>
+.file-upload {
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 5px 13px;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+
+.file-upload input[type="file"] {
+  display: none;
+}
+
 .scroll-to-top {
   position: fixed;
   bottom: 30px;
@@ -118,6 +168,31 @@ export default {
   text-decoration: none; 
 }
 
+.profile {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+.profile-username {
+  font-size: 24px;
+  color: white;
+}
+
+nav {
+  padding: 30px;
+}
+
+nav a {
+  font-weight: bold;
+  color: #2c3e50;
+}
 .detail{
   margin-top: 100px;
 }

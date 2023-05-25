@@ -4,8 +4,11 @@
       <div class="form-holder">
         <div class="form-content">
           <div class="form-items">
-            <h3>로그인</h3>
-            <br>
+
+            <b class="loginStyle">로그인 </b>
+            <hr style="border-color:white">
+            <!-- <br> -->
+
             <form @submit.prevent='logIn' class="requires-validation" novalidate>
               <div class="col-md-12">
                 <input v-model="username" class="form-control" type="text" name="name" placeholder="username" required>
@@ -22,7 +25,7 @@
               <div class="error-message" v-if="loginValid" >로그인 정보가 올바르지 않습니다 </div>
               <br>
                
-              <p>CineMap 회원이 아니신가요? <router-link :to="{name:'signup'}">지금 바로 가입해보세요!</router-link>  </p>
+              <p>CineMap 회원이 아니신가요? <router-link style="text-decoration:none" :to="{name:'signup'}">지금 바로 가입해보세요!</router-link>  </p>
               <div class="form-button mt-3">
                 <button id="submit" type="submit" class="btn btn-primary">Login</button>
               </div>
@@ -67,6 +70,11 @@ export default {
 </script>
 
 <style>
+.loginStyle {
+  font-size: 30px;
+  color: white;
+}
+
 .error-message {
   color: red;
   font-size: 14px;
@@ -133,7 +141,7 @@ html, body {
 .form-content h3 {
     color: #fff;
     text-align: left;
-    font-size: 28px;
+    font-size: 40px;
     font-weight: 600;
     margin-bottom: 5px;
 }
