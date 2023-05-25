@@ -5,7 +5,7 @@
     </div>
     <div class="">
       <div class="">
-        <div class="mt-5 text-start ">
+        <div class="mt-5 text-start ms-5">
           <p>
             <span class="genre">장르 : </span>
             <span v-for="genre in movie.genres" :key="genre.genre">{{genre.genre}}&nbsp;</span>
@@ -39,10 +39,10 @@ export default {
   max-width: 280px;
 }
 .movie-sticky{
-  width: 20%;
+  width: 18%;
   left: 10%;
 }
 .sticky-poster{
-  width: 90%;
+  width: 80%;
 }
 </style>
