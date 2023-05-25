@@ -35,7 +35,8 @@
       </div>
     </div>
     <div class="mt-5 cast profile-holder">
-      <h3>Cast</h3>    
+      <h3>Cast</h3>
+      <hr>    
       <div class="profile-content">
         <div class="profile-items">
           <div v-for="actor in movie.actors" class="profile-card-2" :key="actor.actor_name">
