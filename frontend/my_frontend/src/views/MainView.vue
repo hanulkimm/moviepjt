@@ -8,7 +8,9 @@
     </div>
     <nav class="navbar navbar-dark bg-dark sticky-top">
       <div class="container-fluid">
-        <img src="../assets/movie_icon.png" alt="">
+        <font-awesome-icon :icon="['fas', 'earth-americas']"  size="2xl" style="color: #ffffff;" />
+        <!-- <font-awesome-icon :icon="['fas', 'video']" size="xl" style="color: #ffffff;" /> -->
+        <!-- <img src="../assets/movie_icon.png" alt=""> -->
         <router-link class="big-link " @click.native="resetMovieList" to="/home">C<font-awesome-icon :icon="['fas', 'map-pin']" />neMap</router-link>
         <button @click="profile" class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
           <font-awesome-icon :icon="['fas', 'user']" size="xl" style="color: #ffffff;" />
