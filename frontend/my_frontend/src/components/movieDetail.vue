@@ -47,13 +47,14 @@
       </div>
     </div>
     <div class="review">
-      <reviewList :movie_pk="$route.params.movie_pk"/>
+      <reviewBody :movie_pk="$route.params.movie_pk"/>
     </div>
+    <div class="empty"></div>
   </div>
 </template>
 
 <script>
-import reviewList from '../components/reviewList.vue'
+import reviewBody from './reviewBody.vue'
 
 export default {
   name: 'movieDetail',
@@ -73,7 +74,7 @@ export default {
     }
   },
   components:{
-    reviewList
+    reviewBody
   },
   methods:{
   },

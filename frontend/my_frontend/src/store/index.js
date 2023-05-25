@@ -328,9 +328,6 @@ export default new Vuex.Store({
     },
     setMessage(state, payload){
       state.message = payload.message
-      if (payload.message){
-        payload.scrollto.scrollIntoView({ behavior: "smooth"})
-      }
     },
     selectCity(state, payload){
       state.selectedCity = payload
@@ -350,20 +347,23 @@ export default new Vuex.Store({
     getMovieList(context, payload){
       context.commit('selectCity', payload.city)
       let URL
-      if (payload.city == '') {
+      if (payload.city === '') {
         URL = `http://127.0.0.1:8000/api/v1/movies/location/${payload.state}/`
         axios({
           method: 'get',
           url: URL,
         }).then(res => {
           context.commit('setMovieList', res.data)
-          context.commit('setMessage', {message: '', scrollto: payload.scrollto})
-        }).then(() => {
-          payload.scrollto.scrollIntoView({ behavior: "smooth"})
+          context.commit('setMessage', {message: ''})
         }).catch(err => {
-          context.commit('setMessage', {message: '촬영된 영화가 없습니다.', scrollto: payload.scrollToTop})
+          context.commit('setMessage', {message: '촬영된 영화가 없습니다.'})
           context.commit('resetMovieList')
           console.log(err)
+        }).then(() => {
+          if (context.state.state === '행정구역을 선택해주세요') {
+            payload.scrollToTop.scrollIntoView({ behavior: "smooth" })
+          }
+          payload.scrollto.scrollIntoView({ behavior: "smooth"})
         })
       }
       else{
@@ -374,12 +374,15 @@ export default new Vuex.Store({
         }).then(res => {
           context.commit('setMovieList', res.data.movies)
           context.commit('setMessage', {message: '', scrollto: payload.scrollto})
-        }).then(() => {
-          payload.scrollto.scrollIntoView({ behavior: "smooth"})
         }).catch(err => {
           context.commit('setMessage', {message: '촬영된 영화가 없습니다.', scrollto: payload.scrollToTop})
           context.commit('resetMovieList')
           console.log(err)
+        }).then(() => {
+          if (context.state.state === '행정구역을 선택해주세요') {
+            payload.scrollToTop.scrollIntoView({ behavior: "smooth" })
+          }
+          payload.scrollto.scrollIntoView({ behavior: "smooth"})
         })
       }
     },
