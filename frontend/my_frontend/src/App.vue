@@ -64,11 +64,11 @@
               <p>별점</p>
               <div class="mb-3" id="review-update">
                 <fieldset>
-                  <input @click="selectScore" type="radio" name="rating" :value="5" id="update-rate1" class="selected"><label for="update-rate1">⭐</label>
-                  <input @click="selectScore" type="radio" name="rating" :value="4" id="update-rate2"><label for="update-rate2">⭐</label>
-                  <input @click="selectScore" type="radio" name="rating" :value="3" id="update-rate3"><label for="update-rate3">⭐</label>
-                  <input @click="selectScore" type="radio" name="rating" :value="2" id="update-rate4"><label for="update-rate4">⭐</label>
-                  <input @click="selectScore" type="radio" name="rating" :value="1" id="update-rate5"><label for="update-rate5">⭐</label>
+                  <input @click="selectNewScore" type="radio" name="rating" :value="5" id="update-rate1" class="selected"><label for="update-rate1">⭐</label>
+                  <input @click="selectNewScore" type="radio" name="rating" :value="4" id="update-rate2"><label for="update-rate2">⭐</label>
+                  <input @click="selectNewScore" type="radio" name="rating" :value="3" id="update-rate3"><label for="update-rate3">⭐</label>
+                  <input @click="selectNewScore" type="radio" name="rating" :value="2" id="update-rate4"><label for="update-rate4">⭐</label>
+                  <input @click="selectNewScore" type="radio" name="rating" :value="1" id="update-rate5"><label for="update-rate5">⭐</label>
                 </fieldset>
               </div>
               <div class="mb-3">
@@ -78,7 +78,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button @click="updateReview" type="button" class="btn btn-primary">수정하기</button>
+            <button @click="updateReview" type="button" class="btn btn-primary" data-bs-dismiss="modal">수정하기</button>
             <button @click="cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
           </div>
         </div>
@@ -98,7 +98,9 @@ export default {
       city: '',
       value: 0,
       content: '',
-      selectedReview: ''
+      selectedReview: '',
+      newRate: 0,
+      selectedReviewId: 0
     }
   },
   methods: {
@@ -107,6 +109,9 @@ export default {
     },
     selectScore(event){
       this.value = event.target.value
+    },
+    selectNewScore(event){
+      this.newRate = event.target.value
     },
     createReview(){
       axios({
@@ -131,18 +136,36 @@ export default {
           url: `http://127.0.0.1:8000/api/v1/movies/${this.$store.state.movie_pk}/commentlist/`
         }).then(res => {
           this.$store.commit('getMovieReviews', res.data)
-          console.log(res.data)
         })
       }).catch(err => {
         console.log(err)
       })
     },
     cancel(){
-      this.$store.commit('selectReview', {review: '', rate: 0})
+      this.$store.commit('selectReview', {review: '', rate: 0, reviewid: 0})
       this.selectedReview = ''
     },
     updateReview(){
-
+      axios({
+        method: 'put',
+        url: `http://127.0.0.1:8000/api/v1/comments/${this.selectedReviewId}/`,
+        data: {
+          content: this.selectedReview,
+          rate: this.newRate,
+        },
+        headers:{
+            Authorization: `Token ${this.$store.state.token}`
+          }
+      }).then(() => {
+        axios({
+          method: 'get',
+          url: `http://127.0.0.1:8000/api/v1/movies/${this.$store.state.movie_pk}/commentlist/`
+        }).then(res => {
+          this.$store.commit('getMovieReviews', res.data)
+        })
+      }).catch(err => {
+        console.log(err)
+      })
     }
   },
   computed:{
@@ -151,10 +174,12 @@ export default {
     },
     selectedRate(){
       return this.$store.state.selectedRate
-    }
+    },
   },
   watch:{
     selectedRate(){
+      this.selectedReviewId = this.$store.state.selectedReviewId
+      this.newRate = this.selectedRate
       this.selectedReview = this.$store.state.selectedReview
       if (this.selectedRate != 0) {
         let radio = document.querySelector(`#update-rate${6-this.selectedRate}`)
