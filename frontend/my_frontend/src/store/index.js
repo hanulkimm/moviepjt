@@ -432,6 +432,17 @@ export default new Vuex.Store({
     },
     logout(context) {
       context.commit('LOG_OUT')
+    },
+    getProfile(context){
+      axios({
+        method:'get',
+        url: 'http://127.0.0.1:8000/accounts/getprofile/1/'
+      })
+      .then(res=>{
+        console.log(res.data.profile)
+        context.commit('SAVE_PROFILE')
+      })
+      .catch(err=>console.log(err))
     }
   },
   modules: {

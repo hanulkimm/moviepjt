@@ -2,4 +2,4 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class User(AbstractUser):
-    profile = models.URLField(null=True)
+    profile = models.ImageField(blank=True)

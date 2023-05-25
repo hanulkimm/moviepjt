@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <img src="../assets/movie_icon.png" alt="">
         <router-link class="big-link " @click.native="resetMovieList" to="/home">CineMap</router-link>
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
+        <button @click="profile" class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
           <font-awesome-icon :icon="['fas', 'user']" size="xl" style="color: #ffffff;" />
           <!-- <span class="navbar-toggler-icon"></span> -->
         </button>
@@ -92,8 +92,8 @@
 </template>
 
 <script>
-
 import movieList from '@/components/movieList.vue'
+import axios from 'axios'
 
 export default {
   name: 'MainView',
@@ -108,18 +108,30 @@ export default {
     }
   },
   methods: {
+    profile(){
+      this.$store.dispatch('getProfile')
+    },
     handleFileUpload(e) {
       const file = e.target.files[0];
-      const reader = new FileReader();
+      const formData = new FormData()
+      formData.append('profile_url', file)
+      // console.log(formData)
+      const token = this.$store.state.token
+      const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': `Token ${token}`
+          }
+        };
 
-      reader.onload = (event) => {
-        const url = event.target.result;
-        this.imageFile = url;
-        console.log(url);
-  };
-
-  reader.readAsDataURL(file);
-  },
+        axios.post('http://127.0.0.1:8000/accounts/profile/1/', formData, config)
+          .then(res => {
+            console.log(res);
+            console.log('File uploaded successfully.');
+            
+          })
+          .catch(err => console.log(err));
+      },
     logout(){
         this.$store.dispatch('logout')
       },
@@ -170,6 +182,7 @@ export default {
   created(){
     this.$store.commit('unselectCity')
     this.city = ''
+    
   }
 }
 
