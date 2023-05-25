@@ -313,6 +313,9 @@ export default new Vuex.Store({
     getMovieReviews(state, payload){
       state.reviews = payload
     },
+    resetReviewList(state){
+      state.reviews = []
+    },
     setMovieList(state, payload){
       state.movieList = payload
     },

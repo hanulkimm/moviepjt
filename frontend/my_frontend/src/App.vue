@@ -157,14 +157,16 @@ export default {
             Authorization: `Token ${this.$store.state.token}`
           }
       }).then(() => {
+        this.$store.commit('resetReviewList')
+      }).catch(err => {
+        console.log(err)
+      }).then(() => {
         axios({
           method: 'get',
           url: `http://127.0.0.1:8000/api/v1/movies/${this.$store.state.movie_pk}/commentlist/`
         }).then(res => {
           this.$store.commit('getMovieReviews', res.data)
         })
-      }).catch(err => {
-        console.log(err)
       })
     }
   },
