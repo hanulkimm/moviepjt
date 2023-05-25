@@ -81,33 +81,6 @@ export default {
   margin-top: 10px;
 }
 
-*, body {
-    font-family: 'Poppins', sans-serif;
-    font-weight: 400;
-    -webkit-font-smoothing: antialiased;
-    text-rendering: optimizeLegibility;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-html, body {
-    height: 100%;
-    background-color: #152733;
-    overflow: hidden;
-}
-
-.map-space{
-  margin-top: 250px;
-}
-
-.form-holder {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      min-height: 100vh;
-}
-
 .form-holder .form-content {
     position: relative;
     text-align: center;
@@ -123,7 +96,7 @@ html, body {
     padding: 60px;
 }
 
-.form-content .form-items {
+.form-content .form-user-items {
     border: 3px solid #fff;
     padding: 13px;
     display: inline-block;

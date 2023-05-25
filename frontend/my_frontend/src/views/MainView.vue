@@ -265,10 +265,6 @@ nav a.router-link-exact-active {
   z-index: 999;
 }
 
-/* body {
-  overflow: auto;
-} */
-
 .movie-list {
     color: #fff;
     font-size: 28px;
