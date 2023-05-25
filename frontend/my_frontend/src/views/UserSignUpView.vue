@@ -3,7 +3,7 @@
     <div class="row">
       <div class="form-holder">
         <div class="form-content">
-          <div class="form-items">
+          <div class="user-items">
             <h3>회원가입</h3>
             
             <p>아이디로 간편하게 CineMap을 시작하세요! </p>
@@ -89,5 +89,21 @@ export default {
 </script>
 
 <style>
-
+.form-content .user-items {
+    border: 3px solid #fff;
+    padding: 40px;
+    display: inline-block;
+    width: 100%;
+    min-width: 540px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    text-align: left;
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    height: 80vh;
+    max-width: 300px;
+    background-color: rgb(0, 0, 0);
+    opacity: 90%;
+}
 </style>
