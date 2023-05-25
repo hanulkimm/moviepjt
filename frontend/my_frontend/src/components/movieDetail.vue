@@ -8,7 +8,7 @@
         <hr>
       </div>
       <p v-for="(a,i) in showReviewCnt" :key="i">- {{movie.location_details[i].place}}</p>
-      <button v-if="reviewCnt > 3" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <button v-if="reviewCnt > 3" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#location">
         더보기
       </button>
     </div>

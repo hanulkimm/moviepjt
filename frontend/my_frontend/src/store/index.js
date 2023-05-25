@@ -292,15 +292,12 @@ export default new Vuex.Store({
     state: '행정구역을 선택해주세요',
     message: '',
     selectedCity: '',
-    appTop: null,
+    movie_pk: '',
     profile:null,
   },
   getters: {
   },
   mutations: {
-    setAppTop(state, payload){
-      state.appTop = payload
-    },
     setMovieList(state, payload){
       state.movieList = payload
     },
@@ -310,7 +307,8 @@ export default new Vuex.Store({
     },
     getDetailMovie(state, payload){
       console.log(state.movie)
-      state.movie = payload
+      state.movie = payload.movie
+      state.movie_pk = payload.movie_pk
     },
     SAVE_TOKEN(state, token){
       state.token = token,
@@ -399,7 +397,11 @@ export default new Vuex.Store({
         method: 'get',
         url: `http://127.0.0.1:8000/api/v1/movies/detail/${payload.movie_pk}/${payload.region}/`
       }).then(res => {
-        context.commit('getDetailMovie', res.data)
+        const moviedata = {
+          movie: res.data,
+          movie_pk: payload.movie_pk
+        }
+        context.commit('getDetailMovie', moviedata)
       })
     },
     signUp(context, payload){

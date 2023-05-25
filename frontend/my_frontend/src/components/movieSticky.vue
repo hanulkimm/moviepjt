@@ -1,7 +1,7 @@
 <template>
-  <div class="position-fixed mt-5 ">
+  <div class="position-fixed mt-5 movie-sticky">
     <div class="">
-      <div class="profile-card-2"><img :src="movie.poster" class="img img-responsive"></div>
+      <div class="detail-poster"><img :src="movie.poster" class="sticky-poster"></div>
     </div>
     <div class="">
       <div class="">
@@ -37,5 +37,12 @@ export default {
 <style>
 .genre{
   max-width: 280px;
+}
+.movie-sticky{
+  width: 20%;
+  left: 10%;
+}
+.sticky-poster{
+  width: 90%;
 }
 </style>
