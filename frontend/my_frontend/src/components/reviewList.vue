@@ -40,31 +40,31 @@
                 <span class="mt-2 pb-4 mb-3 content black">
                   {{review.content}}
                 </span>
-                <span class="section dots">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </span>
-                <span class="section pt-2">
-                  <i class='uil uil-clock-two mt-3'></i>
-                </span>
-                <div>
-                  <button @click="updateReview" :data-rate="review.rate" :data-review="review.content" type="button" class="btn btn-primary btn-small me-3" data-bs-toggle="modal" data-bs-target="#review-update-modal">수정</button>
-                  <button type="button" class="btn btn-danger btn-small">삭제</button>
+                <div v-if="review.user.username===username">
+                  <span class="section dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </span>
+                  <span class="section pt-2">
+                    <i class='uil uil-clock-two mt-3'></i>
+                  </span>
+                  <button @click="updateReview" :data-reviewid="review.id" :data-rate="review.rate" :data-review="review.content" type="button" class="btn btn-primary btn-small me-3" data-bs-toggle="modal" data-bs-target="#review-update-modal">수정</button>
+                  <button @click="deleteReview" :data-reviewid="review.id" type="button" class="btn btn-danger btn-small">삭제</button>
                 </div>
                 <span class="bottom-dots">
                   <span class="section dots">
@@ -100,6 +100,7 @@
 
 <script>
 import $ from 'jquery'
+import axios from 'axios'
 
 export default {
   name: 'reviewList',
@@ -109,13 +110,139 @@ export default {
   computed: {
     username(){
       return localStorage.getItem('username')
+    },
+    reviewList(){
+      return this.$store.state.reviews
     }
   },
   methods:{
     updateReview(event){
-      this.$store.commit('selectReview', {review: event.target.dataset.review, rate: event.target.dataset.rate})
+      console.log(event.target.dataset.reviewid)
+      this.$store.commit('selectReview', {review: event.target.dataset.review, rate: event.target.dataset.rate, reviewid: event.target.dataset.reviewid})
+    },
+    deleteReview(event){
+      axios({
+        method: 'delete',
+        url: `http://127.0.0.1:8000/api/v1/comments/${event.target.dataset.reviewid}/`,
+        headers:{
+            Authorization: `Token ${this.$store.state.token}`
+          }
+      }).then(() => {
+        axios({
+          method: 'get',
+          url: `http://127.0.0.1:8000/api/v1/movies/${this.$store.state.movie_pk}/commentlist/`,
+        }).then(res => {
+          this.$store.commit('getMovieReviews', res.data)
+        })
+      }).catch(err => {
+        console.log(err)
+      })
     }
+  },
+  watch:{
+    reviewList(){
+      $(document).ready(function () {
+      let itemsMainDiv = ('.MultiCarousel');
+      let itemsDiv = ('.MultiCarousel-inner');
+      let itemWidth = "";
+      $('.leftLst, .rightLst').click(function () {
+        let condition = $(this).hasClass("leftLst");
+        if (condition)
+          click(0, this);
+        else
+          click(1, this)
+      });
+    
+        ResCarouselSize();
+    
+        $(window).resize(function () {
+          ResCarouselSize();
+        });
+    
+        //this function define the size of the items
+        function ResCarouselSize() {
+          let incno = 0;
+          let dataItems = ("data-items");
+          let itemClass = ('.item');
+          let id = 0;
+          let btnParentSb = '';
+          let itemsSplit = '';
+          let sampwidth = $(itemsMainDiv).width();
+          let bodyWidth = $('body').width();
+          $(itemsDiv).each(function () {
+            id = id + 1;
+            let itemNumbers = $(this).find(itemClass).length;
+            btnParentSb = $(this).parent().attr(dataItems);
+            itemsSplit = btnParentSb.split(',');
+            $(this).parent().attr("id", "MultiCarousel" + id);
+    
+    
+            if (bodyWidth >= 1200) {
+                incno = itemsSplit[3];
+                itemWidth = sampwidth / incno;
+            }
+            else if (bodyWidth >= 992) {
+                incno = itemsSplit[2];
+                itemWidth = sampwidth / incno;
+            }
+            else if (bodyWidth >= 768) {
+                incno = itemsSplit[1];
+                itemWidth = sampwidth / incno;
+            }
+            else {
+                incno = itemsSplit[0];
+                itemWidth = sampwidth / incno;
+            }
+            $(this).css({ 'transform': 'translateX(0px)', 'width': itemWidth * itemNumbers });
+            $(this).find(itemClass).each(function () {
+                $(this).outerWidth(itemWidth);
+            });
+    
+            $(".leftLst").addClass("over");
+            $(".rightLst").removeClass("over");
+    
+          });
+        }
+        //this function used to move the items
+        function ResCarousel(e, el, s) {
+            let leftBtn = ('.leftLst');
+            let rightBtn = ('.rightLst');
+            let translateXval = '';
+            let divStyle = $(el + ' ' + itemsDiv).css('transform');
+            // eslint-disable-next-line
+            let values = divStyle.match(/-?[\d\.]+/g);
+            let xds = Math.abs(values[4]);
+            if (e == 0) {
+                translateXval = parseInt(xds) - parseInt(itemWidth * s);
+                $(el + ' ' + rightBtn).removeClass("over");
+    
+                if (translateXval <= itemWidth / 2) {
+                    translateXval = 0;
+                    $(el + ' ' + leftBtn).addClass("over");
+                }
+            }
+            else if (e == 1) {
+                let itemsCondition = $(el).find(itemsDiv).width() - $(el).width();
+                translateXval = parseInt(xds) + parseInt(itemWidth * s);
+                $(el + ' ' + leftBtn).removeClass("over");
+    
+                if (translateXval >= itemsCondition - itemWidth / 2) {
+                    translateXval = itemsCondition;
+                    $(el + ' ' + rightBtn).addClass("over");
+                }
+            }
+            $(el + ' ' + itemsDiv).css('transform', 'translateX(' + -translateXval + 'px)');
+        }
+    
+        //It is used to get some elements from btn
+        function click(ell, ee) {
+            let Parent = "#" + $(ee).parent().attr("id");
+            let slide = $(Parent).attr("data-slide");
+            ResCarousel(ell, Parent, slide);
+        }
+    });
 
+    }
   },
   updated(){
     $(document).ready(function () {
@@ -218,7 +345,7 @@ export default {
             ResCarousel(ell, Parent, slide);
         }
     });
-  }
+  },
 }
 </script>
 

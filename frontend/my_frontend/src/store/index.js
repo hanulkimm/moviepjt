@@ -297,7 +297,8 @@ export default new Vuex.Store({
     profile:null,
     reviews: [],
     selectedReview: '',
-    selectedRate: 0
+    selectedRate: 0,
+    selectedReviewId: 0
   },
   getters: {
   },
@@ -305,6 +306,7 @@ export default new Vuex.Store({
     selectReview(state, payload){
       state.selectedReview = payload.review
       state.selectedRate = payload.rate
+      state.selectedReviewId = payload.reviewid
     },
     getMovieReviews(state, payload){
       state.reviews = payload
