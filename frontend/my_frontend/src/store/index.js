@@ -292,7 +292,8 @@ export default new Vuex.Store({
     state: '행정구역을 선택해주세요',
     message: '',
     selectedCity: '',
-    appTop: null
+    appTop: null,
+    profile:null,
   },
   getters: {
   },
@@ -342,6 +343,10 @@ export default new Vuex.Store({
       state.username = null
       router.push({name:'entry'})
     },
+    SAVE_PROFILE(state, profile){
+      this.state.profile = 'http://127.0.0.1:8000' + profile
+      console.log('successful save in state')
+    }
   },
   actions: {
     getMovieList(context, payload){
@@ -442,8 +447,10 @@ export default new Vuex.Store({
         url: 'http://127.0.0.1:8000/accounts/getprofile/1/'
       })
       .then(res=>{
-        console.log(res.data.profile)
-        context.commit('SAVE_PROFILE')
+        console.log('got profile url')
+        // console.log(res.data.profile)
+        const profile = res.data.profile
+        context.commit('SAVE_PROFILE', profile)
       })
       .catch(err=>console.log(err))
     }
