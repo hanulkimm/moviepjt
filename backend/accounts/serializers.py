@@ -6,3 +6,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('profile',)
+
+class UserNicknameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('nickname',)

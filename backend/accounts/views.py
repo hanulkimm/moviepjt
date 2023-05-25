@@ -9,7 +9,7 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth import get_user_model
 from django.core.files.storage import default_storage
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UserNicknameSerializer
 from django.conf import settings
 User = get_user_model()
 
@@ -29,4 +29,19 @@ def upload_profile(request, username):
 def get_profile(request, username):
     user = get_object_or_404(User,username = username)
     serializer = UserSerializer(user)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def save_nickname(request, username):
+    if request.data.get('nickname'):
+        user = get_object_or_404(User, username = username)
+        user.nickname = request.data.get('nickname')
+        user.save()
+        return Response(status=status.HTTP_200_OK)
+    return Response(status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def get_nickname(request, username):
+    user = get_object_or_404(User,username = username)
+    serializer = UserNicknameSerializer(user)
     return Response(serializer.data)
