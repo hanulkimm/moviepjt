@@ -2,13 +2,15 @@
   <div>
     <div class="container">
       <div class="row">
-        <div class="col-md-3 col-lg-2 movie" v-for="movie in movieList" :key="movie.id">
+        <div class="col-md-4 col-lg-3 col-xl-2 movie" v-for="movie in movieList" :key="movie.id">
           <hr>
           <div class="profile-card-2"><img @click="clickMovie" :id="movie.id" :src="movie.poster" class="img img-responsive">
           </div>
         </div>
       </div>
     </div>
+    <div class="empty">.</div>
+
   </div>
 </template>
 
@@ -45,5 +47,11 @@ export default {
   filter: grayscale(100%);
   transform: rotate(5deg) scale(1.1, 1.1);
 
+}
+
+.empty{
+  background-color: rgb(0, 0, 0);
+  opacity: 0%;
+  height: 100px;
 }
 </style>

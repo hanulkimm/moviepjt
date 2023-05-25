@@ -41,7 +41,7 @@
           <div class="main mb-4 col-4">
             <movieSticky/>
           </div>
-          <div class="mb-4 col-6">
+          <div class="mb-4 col-6" ref="movie-detail">
             <movieDetail/>
           </div>
         </div>
@@ -74,12 +74,9 @@ export default {
       this.$store.dispatch('resetMovieList')
     },
     // scroll up
-    // scrollToTop() {
-    //   console.log('hiiii')
-    //   gsap.to(window, 0.7,{
-    //     scrollTo:0
-    //   });
-    // },
+    scrollToTop() {
+      this.$refs["movie-detail"].scrollIntoView({behavior: 'smooth'})
+    },
     
   },
   components:{
@@ -100,7 +97,7 @@ export default {
   },
   mounted(){
     console.log('mount')
-    this.$refs['detail'].scrollIntoView()
+    this.$refs['movie-detail'].scrollIntoView()
     window.scrollBy(0, 100)
     // scroll up
     // gsap.registerPlugin(ScrollToPlugin);
@@ -111,8 +108,8 @@ export default {
 <style>
 .scroll-to-top {
   position: fixed;
-  bottom: 5%;
-  right: 5%;
+  bottom: 10px;
+  right: 30px;
   z-index: 999;
 }
 
