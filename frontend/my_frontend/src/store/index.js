@@ -297,7 +297,8 @@ export default new Vuex.Store({
     profile:null,
     reviews: [],
     selectedReview: '',
-    selectedRate: 0
+    selectedRate: 0,
+    loginTry:false,
   },
   getters: {
   },
@@ -479,7 +480,11 @@ export default new Vuex.Store({
           context.commit('SAVE_NICKNAME', nickname)
         })
       })
-      .catch(err=>console.log(err))
+      .catch(err=>{
+        console.log(err)
+        this.state.loginTry = true
+      })
+
     },
     logout(context) {
       context.commit('LOG_OUT')

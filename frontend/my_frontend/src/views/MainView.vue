@@ -36,7 +36,7 @@
               </label>
               
               <br>
-              <br><br>
+              <!-- <br> -->
               <!-- -----------------FORM---------------->
               <hr style="border-color:white">
               <form  @submit.prevent='edit' class="requires-validation" novalidate>
@@ -94,7 +94,7 @@
                 <div class="form-content">
                   <div class="form-items">
                     <h3>로케이션 촬영 장소로 영화 추천 받기</h3>
-                    <br>
+                    <!-- <br> -->
                     <p>지도를 눌러서 빈칸을 채워주세요!</p>
 
                     <form class="requires-validation" novalidate @submit.prevent="getMovieList">
@@ -286,6 +286,10 @@ export default {
     this.city = ''
     this.$store.dispatch('getProfile')
     this.nickname = this.$store.state.nickname
+    // login page에서 새로고침 시 생기는 오류 고치기 위함
+    if (!this.$store.state.token) {
+      this.$router.push({name:'login'})
+    }
   },
 }
 
