@@ -31,11 +31,11 @@
               <p>별점</p>
               <div class="mb-3" id="review-create">
                 <fieldset>
-                  <input @click="selectScore" type="radio" name="rating" :value="5" id="create-rate1"><label for="rate1">⭐</label>
-                  <input @click="selectScore" type="radio" name="rating" :value="4" id="create-rate2"><label for="rate2">⭐</label>
-                  <input @click="selectScore" type="radio" name="rating" :value="3" id="create-rate3"><label for="rate3">⭐</label>
-                  <input @click="selectScore" type="radio" name="rating" :value="2" id="create-rate4"><label for="rate4">⭐</label>
-                  <input @click="selectScore" type="radio" name="rating" :value="1" id="create-rate5"><label for="rate5">⭐</label>
+                  <input @click="selectScore" type="radio" name="rating" :value="5" id="create-rate1"><label for="create-rate1">⭐</label>
+                  <input @click="selectScore" type="radio" name="rating" :value="4" id="create-rate2"><label for="create-rate2">⭐</label>
+                  <input @click="selectScore" type="radio" name="rating" :value="3" id="create-rate3"><label for="create-rate3">⭐</label>
+                  <input @click="selectScore" type="radio" name="rating" :value="2" id="create-rate4"><label for="create-rate4">⭐</label>
+                  <input @click="selectScore" type="radio" name="rating" :value="1" id="create-rate5"><label for="create-rate5">⭐</label>
                 </fieldset>
               </div>
               <div class="mb-3">
@@ -45,7 +45,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button @click="createReview" type="button" class="btn btn-primary">작성하기</button>
+            <button @click="createReview" type="button" class="btn btn-primary" data-bs-dismiss="modal">작성하기</button>
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
           </div>
         </div>
@@ -64,22 +64,22 @@
               <p>별점</p>
               <div class="mb-3" id="review-update">
                 <fieldset>
-                  <input @click="selectScore" type="radio" name="rating" :value="5" id="update-rate1"><label for="rate1">⭐</label>
-                  <input @click="selectScore" type="radio" name="rating" :value="4" id="update-rate2"><label for="rate2">⭐</label>
-                  <input @click="selectScore" type="radio" name="rating" :value="3" id="update-rate3"><label for="rate3">⭐</label>
-                  <input @click="selectScore" type="radio" name="rating" :value="2" id="update-rate4"><label for="rate4">⭐</label>
-                  <input @click="selectScore" type="radio" name="rating" :value="1" id="update-rate5"><label for="rate5">⭐</label>
+                  <input @click="selectScore" type="radio" name="rating" :value="5" id="update-rate1" class="selected"><label for="update-rate1">⭐</label>
+                  <input @click="selectScore" type="radio" name="rating" :value="4" id="update-rate2"><label for="update-rate2">⭐</label>
+                  <input @click="selectScore" type="radio" name="rating" :value="3" id="update-rate3"><label for="update-rate3">⭐</label>
+                  <input @click="selectScore" type="radio" name="rating" :value="2" id="update-rate4"><label for="update-rate4">⭐</label>
+                  <input @click="selectScore" type="radio" name="rating" :value="1" id="update-rate5"><label for="update-rate5">⭐</label>
                 </fieldset>
               </div>
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">내용</label>
-                <textarea v-model="content" class="form-control" id="review-update-text"></textarea>
+                <textarea v-model="selectedReview" class="form-control" id="review-update-text"></textarea>
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button @click="createReview" type="button" class="btn btn-primary">수정하기</button>
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            <button @click="updateReview" type="button" class="btn btn-primary">수정하기</button>
+            <button @click="cancel" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
           </div>
         </div>
       </div>
@@ -98,6 +98,7 @@ export default {
       city: '',
       value: 0,
       content: '',
+      selectedReview: ''
     }
   },
   methods: {
@@ -119,6 +120,8 @@ export default {
           Authorization: `Token ${this.$store.state.token}`
         }
       }).then(res => {
+        let radio = document.querySelector('input[type=radio]:checked')
+        radio.checked = false;
         this.value = 0
         this.content = ''
         console.log(res)
@@ -134,15 +137,33 @@ export default {
         console.log(err)
       })
     },
+    cancel(){
+      this.$store.commit('selectReview', {review: '', rate: 0})
+      this.selectedReview = ''
+    },
+    updateReview(){
+
+    }
   },
   computed:{
     movie(){
       return this.$store.state.movie
+    },
+    selectedRate(){
+      return this.$store.state.selectedRate
     }
   },
+  watch:{
+    selectedRate(){
+      this.selectedReview = this.$store.state.selectedReview
+      if (this.selectedRate != 0) {
+        let radio = document.querySelector(`#update-rate${6-this.selectedRate}`)
+        radio.checked = true;
+      }
+    }
+  }
 }
 </script>
-
 
 <style>
 .universe{
@@ -196,28 +217,28 @@ export default {
 
 
 #review-update fieldset{
-    display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
-    direction: rtl; /* 이모지 순서 반전 */
-    border: 0; /* 필드셋 테두리 제거 */
+  display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
+  direction: rtl; /* 이모지 순서 반전 */
+  border: 0; /* 필드셋 테두리 제거 */
 }
 #review-update fieldset legend{
-    text-align: left;
+  text-align: left;
 }
 #review-update input[type=radio]{
-    display: none; /* 라디오박스 감춤 */
+  display: none; /* 라디오박스 감춤 */
 }
 #review-update label{
-    font-size: 1em; /* 이모지 크기 */
-    color: transparent; /* 기존 이모지 컬러 제거 */
-    text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
+  font-size: 1em; /* 이모지 크기 */
+  color: transparent; /* 기존 이모지 컬러 제거 */
+  text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
 }
 #review-update label:hover{
-    text-shadow: 0 0 0 rgb(232, 247, 31); /* 마우스 호버 */
+  text-shadow: 0 0 0 rgb(232, 247, 31); /* 마우스 호버 */
 }
 #review-update label:hover ~ label{
-    text-shadow: 0 0 0 rgb(232, 247, 31); /* 마우스 호버 뒤에오는 이모지들 */
+  text-shadow: 0 0 0 rgb(232, 247, 31); /* 마우스 호버 뒤에오는 이모지들 */
 }
 #review-update input[type=radio]:checked ~ label{
-    text-shadow: 0 0 0 rgb(232, 247, 31); /* 마우스 클릭 체크 */
+  text-shadow: 0 0 0 rgb(232, 247, 31); /* 마우스 클릭 체크 */
 }
 </style>
