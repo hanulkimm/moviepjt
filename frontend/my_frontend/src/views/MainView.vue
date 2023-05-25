@@ -42,7 +42,6 @@
     <div class="home">
       <div class="position-relative top">
         <h3 class="movie-list text-center">{{state}} {{city}}</h3>
-        <h3 class="text-center"><strong>{{message}}</strong></h3>
       </div>
       <div class="d-flex justify-content-center">
         <div class="map-space">
@@ -84,6 +83,7 @@
       </div>
     </div>
     <div class="justify-content-center" ref="movie-list">
+      <h3 class="text-center"><strong>{{message}}</strong></h3>
       <div></div>
       <movieList/>
     </div>

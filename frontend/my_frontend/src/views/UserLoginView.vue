@@ -4,12 +4,12 @@
       <div class="form-holder">
         <div class="form-content">
           <div class="form-items">
+
             <b class="loginStyle">로그인 </b>
             <hr style="border-color:white">
             <!-- <br> -->
 
             <form @submit.prevent='logIn' class="requires-validation" novalidate>
-
               <div class="col-md-12">
                 <input v-model="username" class="form-control" type="text" name="name" placeholder="username" required>
                 <div class="valid-feedback">Username field is valid!</div>
@@ -125,7 +125,7 @@ html, body {
 
 .form-content .form-items {
     border: 3px solid #fff;
-    padding: 40px;
+    padding: 13px;
     display: inline-block;
     width: 100%;
     min-width: 540px;
@@ -147,7 +147,7 @@ html, body {
 }
 
 .form-content h3.form-title {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .form-content p {
@@ -156,7 +156,7 @@ html, body {
     font-size: 17px;
     font-weight: 300;
     line-height: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 
@@ -164,9 +164,9 @@ html, body {
     color: #fff;
 }
 
-.form-content input[type=text], .form-content input[type=email], .form-content select {
+.form-content input[type=text], .form-content input[type=password], .form-content select {
     width: 100%;
-    padding: 15px 20px;
+    padding: 13px 20px;
     text-align: left;
     border: 0;
     outline: 0;
@@ -177,7 +177,7 @@ html, body {
     color: #8D8D8D;
     -webkit-transition: all 0.3s ease;
     transition: all 0.3s ease;
-    margin-top: 20px;
+    margin-top: 15px;
 }
 
 
