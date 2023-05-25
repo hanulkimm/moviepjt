@@ -108,7 +108,7 @@ export default {
 <style>
 .scroll-to-top {
   position: fixed;
-  bottom: 10px;
+  bottom: 30px;
   right: 30px;
   z-index: 999;
 }
@@ -139,7 +139,7 @@ export default {
 
 .profile-content .profile-items {
     border: 3px solid #fff;
-    padding: 20px;
+    padding: 40px;
     display: flex;
     min-width: 540px;
     -webkit-border-radius: 10px;
