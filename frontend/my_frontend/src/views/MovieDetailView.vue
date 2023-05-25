@@ -37,8 +37,8 @@
     <div class="d-flex justify-content-center detail text-white" ref="detail">
       <div class="movie-detail-view">
         <div class="capa row">
-          <div class="col-1"></div>
-          <div class="main mb-4 col-4">
+          <!-- <div class="col-1"></div> -->
+          <div class="main mb-4 col-4 justify-content-center">
             <movieSticky/>
           </div>
           <div class="mb-4 col-6" ref="movie-detail">
@@ -129,7 +129,7 @@ export default {
   height: 50vh;
 }
 .movie-detail-view{
-  max-width: 1000px;
+  width: 1500px;
   background-color: rgb(0, 0, 0);
   opacity: 90%;
 }

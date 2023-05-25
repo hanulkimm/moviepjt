@@ -3,15 +3,15 @@
     <div class="row">
       <div class="MultiCarousel" data-items="3, 3, 3, 3" data-slide="2" id="MultiCarousel"  data-interval="1000">
         <div class="MultiCarousel-inner">
-          <div v-for="review in reviews" :key="review.id" class="item">
+          <div v-for="review in reviews" :key="review.id" class="item single-review">
             <div class="pad15">
               <div>
                 <b class="lead">{{review.user}}</b>
                 <span>별점 : {{review.rate}}</span>
                 <div v-if="review.user===username">
                   <div class="review-height">
-                    <span>수정</span>
-                    <span>삭제</span>
+                    <button type="button" class="btn btn-primary btn-small" data-bs-toggle="modal" data-bs-target="#review-update-modal">수정</button>
+                    <button type="button" class="btn btn-danger btn-small">삭제</button>
                   </div>
                 </div>
                 <div v-else>
@@ -150,7 +150,7 @@ export default {
 
 <style>
 .MultiCarousel { float: left; overflow: hidden; padding: 15px; width: 100%; position:relative; }
-.MultiCarousel .MultiCarousel-inner { transition: 1s ease all; float: left; }
+.MultiCarousel .MultiCarousel-inner { transition: 0.1s ease all; float: left; }
 .MultiCarousel .MultiCarousel-inner .item { float: left;}
 .MultiCarousel .MultiCarousel-inner .item > div { text-align: center; height: 300px; padding:3px; margin:3px; background:#f1f1f1; color:#666;}
 .MultiCarousel .leftLst, .MultiCarousel .rightLst { position:absolute; border-radius:50%;top:calc(50% - 20px); }
@@ -160,5 +160,13 @@ export default {
 .review-height{
   height: 20px;
 }
-
+.single-review{
+  width: 150px;
+}
+.btn-small{
+  height: 20px;
+  width: 50px;
+  font-size: 50%;
+  text-align: center;
+}
 </style>
