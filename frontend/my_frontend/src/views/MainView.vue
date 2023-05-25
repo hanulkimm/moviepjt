@@ -69,9 +69,8 @@
                         </select>
                         <p></p>
                       </div>
-                        
                       <div class="form-button mt-3">
-                        <button id="submit" type="submit" class="btn btn-primary" :class="{active:state!=='행정구역을 선택해주세요', disabled:state==='행정구역을 선택해주세요'}">영화 추천 받기</button>
+                        <button id="submit" type="submit" class="btn btn-primary btn-text" :class="{active:state!=='행정구역을 선택해주세요', disabled:state==='행정구역을 선택해주세요'}">영화 추천 받기</button>
                       </div>
                     </form>
                   </div>
@@ -264,7 +263,20 @@ nav a.router-link-exact-active {
   right: 30px;
   z-index: 999;
 }
+.btn-primary:disabled {
+    color: #fff;
+    background-color: #535353;
+    border-color: #357ebd; /*set the color you want here*/
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #2200b9;
+    border-color: #285e8e; /*set the color you want here*/
+}
 
+.disabled{
+  background-color: gray;;
+}
 .movie-list {
     color: #fff;
     font-size: 28px;

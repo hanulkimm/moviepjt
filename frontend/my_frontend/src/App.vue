@@ -122,6 +122,14 @@ export default {
         this.value = 0
         this.content = ''
         console.log(res)
+      }).then(() => {
+        axios({
+          method: 'get',
+          url: `http://127.0.0.1:8000/api/v1/movies/${this.movie_pk}/commentlist/`
+        }).then(res => {
+          this.$store.commit('getMovieReviews', res.data)
+          console.log(res.data)
+        })
       }).catch(err => {
         console.log(err)
       })
@@ -180,6 +188,8 @@ export default {
 #review-create-text{
   height: 200px;
 }
+
+
 #review-update-text{
   height: 200px;
 }
