@@ -7,6 +7,7 @@ import UserSignUpView from '../views/UserSignUpView.vue'
 import UserLoginView from'../views/UserLoginView.vue'
 import MainView from '../views/MainView.vue'
 import EntryView from '../views/EntryView.vue'
+import EntryTrainView from '../views/EntryTrainView.vue'
 import 'maphilight'
 
 Vue.use(VueRouter)
@@ -17,6 +18,12 @@ const routes = [
     path: '/',
     name: 'entry',
     component: EntryView
+  },
+  {
+    path: '/train',
+    name: 'train',
+    component: EntryTrainView
+
   },
   {
     path: '/main',

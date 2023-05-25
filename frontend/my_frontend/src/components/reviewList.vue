@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="MultiCarousel" data-items="3, 3, 3, 3" data-slide="2" id="MultiCarousel"  data-interval="1000">
+      <div class="MultiCarousel" data-items="2, 3, 3, 4" data-slide="2" id="MultiCarousel"  data-interval="1000">
         <div class="MultiCarousel-inner">
-          <div v-for="review in reviews" :key="review.id" class="item single-review">
+          <div v-for="review in reviewList" :key="review.id" class="item single-review">
             <div class="pad15">
               <input class="checkbox-ticket" type="radio" name="ticket" id="ticket-1">
               <label for="ticket-1 ticket">
@@ -351,7 +351,7 @@ export default {
 
 <style>
 .MultiCarousel { float: left; overflow: hidden; padding: 0px; width: 100%; position:relative; }
-.MultiCarousel .MultiCarousel-inner { transition: 0.1s ease all; float: left; }
+.MultiCarousel .MultiCarousel-inner { transition: 0.3s ease all; float: left; }
 .MultiCarousel .MultiCarousel-inner .item { float: left;}
 .MultiCarousel .leftLst, .MultiCarousel .rightLst { position:absolute; border-radius:50%;top:calc(50% - 20px); }
 .MultiCarousel .leftLst { left:0; }
