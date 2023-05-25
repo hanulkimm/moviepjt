@@ -22,13 +22,16 @@
           <div class="offcanvas-body">
             <div class="profile">
               <!-- 프로필!!! -->
-              <img src="../assets/profile.jpg" class="profile-img" alt="Profile Image"><br>
-              <img v-if="imageFile" :src="getImageUrl" alt="Uploaded Image">
+              <!-- <img src="../assets/profile.jpg" class="profile-img" alt="Profile Image"><br> -->
+              <img :src="getImageUrl" alt="Uploaded Image">
+              <br><br>
               <!-- 업로두 -->
             <label for="file-upload" class="file-upload">
-              Upload Profile
+              Upload File
               <input class="inputfile"  id="file-upload" type="file" style="display: none;" @change="handleFileUpload">
             </label>
+            <br>
+              <button @click="profile" class="btn btn-outline-success btn-sm">Submit</button>
 
               <br><br>
               <h3 class="profile-username">Hello, {{this.$store.state.username}}</h3>
@@ -103,12 +106,13 @@ export default {
     return {
       city: '',
       scrollto: this.$refs["movie-list"],
-      imageFile:null,
+      imageFile: null,
+      getImageUrl : null,
     }
   },
   methods: {
     profile(){
-      this.$store.dispatch('getProfile')
+      this.getImageUrl = this.$store.state.profile
     },
     handleFileUpload(e) {
       const file = e.target.files[0];
@@ -128,9 +132,16 @@ export default {
           .then(res => {
             console.log(res);
             console.log('File uploaded successfully.');
-            
+          })
+          .then(()=>{
+            this.$store.dispatch('getProfile')
+          }).then(() => {
+            this.getImageUrl = this.$store.state.profile
+            console.log(this.getImageUrl)
           })
           .catch(err => console.log(err));
+        // 보내고 받아주기
+        
       },
     logout(){
         this.$store.dispatch('logout')
@@ -173,20 +184,13 @@ export default {
     selectedCity(){
       return this.$store.state.selectedCity
     },
-    getImageUrl() {
-    if (this.imageFile) {
-      console.log(this.imageFile);
-      return 
-    } else {
-      return null;
-    }
-  }
   },
   created(){
     this.$store.commit('unselectCity')
     this.city = ''
+    this.$store.dispatch('getProfile')
     
-  }
+  },
 }
 
 </script>
