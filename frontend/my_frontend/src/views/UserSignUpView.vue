@@ -111,7 +111,7 @@ export default {
     text-align: left;
     -webkit-transition: all 0.4s ease;
     transition: all 0.4s ease;
-    height: 65vh;
+    height: auto;
     max-width: 300px;
     background-color: rgb(0, 0, 0);
     opacity: 90%;
