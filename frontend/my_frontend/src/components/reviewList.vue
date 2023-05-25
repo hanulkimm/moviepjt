@@ -6,9 +6,9 @@
           <div v-for="review in reviews" :key="review.id" class="item single-review">
             <div class="pad15">
               <div>
-                <b class="lead">{{review.nickname}}</b>
+                <b class="lead">{{review.user.nickname}}</b>
                 <span>별점 : {{review.rate}}</span>
-                <div v-if="review.user===username">
+                <div v-if="review.user.username===username">
                   <div class="review-height">
                     <button type="button" class="btn btn-primary btn-small" data-bs-toggle="modal" data-bs-target="#review-update-modal">수정</button>
                     <button type="button" class="btn btn-danger btn-small">삭제</button>
@@ -161,7 +161,7 @@ export default {
   height: 20px;
 }
 .single-review{
-  width: 150px;
+  width: 200px;
 }
 .btn-small{
   height: 20px;
