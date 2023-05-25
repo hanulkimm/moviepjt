@@ -125,7 +125,7 @@ export default {
       }).then(() => {
         axios({
           method: 'get',
-          url: `http://127.0.0.1:8000/api/v1/movies/${this.movie_pk}/commentlist/`
+          url: `http://127.0.0.1:8000/api/v1/movies/${this.$store.state.movie_pk}/commentlist/`
         }).then(res => {
           this.$store.commit('getMovieReviews', res.data)
           console.log(res.data)
