@@ -6,7 +6,7 @@
           <div v-for="review in reviews" :key="review.id" class="item single-review">
             <div class="pad15">
               <div>
-                <b class="lead">{{review.user}}</b>
+                <b class="lead">{{review.nickname}}</b>
                 <span>별점 : {{review.rate}}</span>
                 <div v-if="review.user===username">
                   <div class="review-height">
