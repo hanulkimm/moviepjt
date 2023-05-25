@@ -50,12 +50,12 @@ export default {
   },
   computed:{
     loginValid(){
-      return this.loginTry && !this.$store.state.token
+      return this.$store.state.loginTry && !this.$store.state.token
     }
   },
   methods:{
     logIn(){
-      this.loginTry = true
+      this.loginTry = true 
       const username = this.username
       const password = this.password
 
@@ -63,9 +63,8 @@ export default {
         username, password
       }
       this.$store.dispatch('logIn',payload)
-      
-    }
-  }
+    },
+  },
 }
 </script>
 
