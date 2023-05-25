@@ -5,7 +5,6 @@
         <div class="form-content">
           <div class="form-items">
             <h3>회원가입</h3>
-            
             <p>아이디로 간편하게 CineMap을 시작하세요! </p>
             
             <form @submit.prevent='signUp' class="requires-validation" novalidate>
