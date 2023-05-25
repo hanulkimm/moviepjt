@@ -442,9 +442,10 @@ export default new Vuex.Store({
       context.commit('LOG_OUT')
     },
     getProfile(context){
+      const username = this.state.username
       axios({
         method:'get',
-        url: 'http://127.0.0.1:8000/accounts/getprofile/1/'
+        url: `http://127.0.0.1:8000/accounts/getprofile/${username}/`
       })
       .then(res=>{
         console.log('got profile url')
