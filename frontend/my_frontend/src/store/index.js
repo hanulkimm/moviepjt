@@ -295,11 +295,17 @@ export default new Vuex.Store({
     selectedCity: '',
     movie_pk: '',
     profile:null,
-    reviews: []
+    reviews: [],
+    selectedReview: '',
+    selectedRate: 0
   },
   getters: {
   },
   mutations: {
+    selectReview(state, payload){
+      state.selectedReview = payload.review
+      state.selectedRate = payload.rate
+    },
     getMovieReviews(state, payload){
       state.reviews = payload
     },

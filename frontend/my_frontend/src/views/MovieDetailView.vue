@@ -127,14 +127,11 @@ export default {
         region: this.$route.params.region, 
         movie_pk: this.$route.params.movie_pk
       }
-    console.log(params)
     this.$store.dispatch('getDetailMovie', params)
     this.$store.dispatch('getProfile')
   },
   mounted(){
-    console.log('mount')
     this.$refs['movie-detail'].scrollIntoView()
-    window.scrollBy(0, 100)
   }
 }
 </script>
