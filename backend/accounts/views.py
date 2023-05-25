@@ -33,8 +33,9 @@ def get_profile(request, username):
 
 @api_view(['POST'])
 def save_nickname(request, username):
-    if request.data.get('nickname'):
-        user = get_object_or_404(User, username = username)
+    user = get_object_or_404(User, username = username)
+    if request.data.get('nickname') :
+        print('change password')
         user.nickname = request.data.get('nickname')
         user.save()
         return Response(status=status.HTTP_200_OK)
