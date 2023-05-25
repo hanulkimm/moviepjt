@@ -32,7 +32,7 @@
             </label>
             <br>
               <br><br>
-              <h3 class="profile-username">Hello, {{this.$store.state.username}}</h3>
+              <h3 class="profile-username">Hello, {{this.$store.state.nickname}}님</h3>
               <button style="position: fixed; bottom: 50px; right: 150px;" @click="logout" type="button" class="btn btn-outline-danger btn-sm">LogOut</button>
             </div>
          </div>

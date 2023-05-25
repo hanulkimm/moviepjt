@@ -8,6 +8,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     username : localStorage.getItem('username'),
+    nickname : localStorage.getItem('nickname'),
     token:localStorage.getItem('token'),
     regions: {
       강원도: [
@@ -319,6 +320,10 @@ export default new Vuex.Store({
       state.username = username
       localStorage.setItem('username', username)
     },
+    SAVE_NICKNAME(state, nickname){
+      state.nickname = nickname
+      localStorage.setItem('nickname', nickname)
+    },
     selectState(state, payload){
       state.state = payload
     },
@@ -339,6 +344,8 @@ export default new Vuex.Store({
       state.token=null
       localStorage.removeItem('username')
       state.username = null
+      localStorage.removeItem('nickname')
+      state.nickname = null
       router.push({name:'entry'})
     },
     SAVE_PROFILE(state, profile){
@@ -406,6 +413,7 @@ export default new Vuex.Store({
     },
     signUp(context, payload){
       const username = payload.username
+      const nickname = payload.nickname
       const password1 = payload.password1
       const password2 = payload.password2
 
@@ -413,13 +421,24 @@ export default new Vuex.Store({
         method:'post',
         url: `http://127.0.0.1:8000/accounts/signup/`,
         data:{
-          username, password1, password2
+          username, nickname, password1, password2
         }
       })
         .then((res)=>{
           // console.log(res.data.key)
           context.commit('SAVE_TOKEN', res.data.key)
           context.commit('SAVE_USERNAME', username)
+          context.commit('SAVE_NICKNAME', nickname)
+        })
+        // nickname 저장
+        .then(()=>{
+          axios({
+            method:'post',
+            url: `http://127.0.0.1:8000/accounts/nickname/${username}/`,
+            data :{
+              nickname
+            }
+          })
         })
         .catch(err=>console.log(err))
       
@@ -435,8 +454,20 @@ export default new Vuex.Store({
         }
       })
       .then(res=>{
+        console.log(res.data)
         context.commit('SAVE_TOKEN', res.data.key)
         context.commit('SAVE_USERNAME', username)
+      })
+      .then(()=>{
+        axios({
+          method:'get',
+          url: `http://127.0.0.1:8000/accounts/getnickname/${username}`
+        })
+        .then(res=>{
+          const nickname = res.data.nickname
+          console.log(res.data.nickname)
+          context.commit('SAVE_NICKNAME', nickname)
+        })
       })
       .catch(err=>console.log(err))
     },

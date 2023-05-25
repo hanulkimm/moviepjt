@@ -5,10 +5,11 @@
         <div class="form-content">
           <div class="user-items">
             <h3>회원가입</h3>
-            <p>아이디로 간편하게 CineMap을 시작하세요! </p>
+            <hr style="border-color:white">
+            <!-- <p>아이디로 간편하게 CineMap을 시작하세요! </p> -->
             
             <form @submit.prevent='signUp' class="requires-validation" novalidate>
-
+              <!-- username -->
               <div class="col-md-12">
                 <input v-model="username" class="form-control" type="text" name="name" placeholder="Username" required>
                 <div class="valid-feedback">Username field is valid!</div>
@@ -16,6 +17,14 @@
               </div>
               <br>
               
+              <!-- nickname -->
+              <div class="col-md-12">
+                <input v-model="nickname" class="form-control" type="text" name="name" placeholder="Nickname" required>
+                <div class="valid-feedback">Username field is valid!</div>
+                <div class="invalid-feedback">Username field cannot be blank!</div>
+              </div>
+              <br>
+
               <div class="col-md-12">
                 <input v-model="password1" @input="passwordLengthValid" class="form-control" type="password" name="name" placeholder="Enter Password" required>
                 <div class="valid-feedback">Username field is valid!</div>
@@ -32,7 +41,7 @@
                 <div class="error-message" v-if="matchError">비밀번호가 일치하지 않습니다.</div>
               </div>
               <br>
-              <p>이미 회원이신가요? <router-link :to="{name:'login'}">LOGIN</router-link> </p>
+              <p>이미 회원이신가요?  <router-link style="text-decoration:none" :to="{name:'login'}">Login</router-link> </p>
               <div class="form-button mt-3">
                 <button id="submit" type="submit" class="btn btn-primary">SignUp</button>
               </div>
@@ -45,11 +54,13 @@
 </template>
 
 <script>
+// import axios from 'axios'
 export default {
   name: 'UserSignUpView',
   data(){
     return {
       username : null,
+      nickname: null,
       password1 : null,
       password2 : null,
       passwordError: false,
@@ -74,14 +85,14 @@ export default {
     },
     signUp(){
       const username = this.username
+      const nickname = this.nickname
       const password1 = this.password1
       const password2 = this.password2
 
       const payload = {
-        username, password1, password2
+        username, nickname, password1, password2
       }
       this.$store.dispatch('signUp',payload)
-      
     }
   }
 }
@@ -100,7 +111,7 @@ export default {
     text-align: left;
     -webkit-transition: all 0.4s ease;
     transition: all 0.4s ease;
-    height: 80vh;
+    height: 65vh;
     max-width: 300px;
     background-color: rgb(0, 0, 0);
     opacity: 90%;
