@@ -1,103 +1,145 @@
 <template>
-  <div>
-    <div>
-    </div>
-    <div>
-      <form id="myform" @submit.prevent="createReview">
-        <input v-model="content" type="text">
-        <fieldset>
-          <input @click="selectScore" type="radio" name="rating" :value="5" id="rate1"><label for="rate1">⭐</label>
-          <input @click="selectScore" type="radio" name="rating" :value="4" id="rate2"><label for="rate2">⭐</label>
-          <input @click="selectScore" type="radio" name="rating" :value="3" id="rate3"><label for="rate3">⭐</label>
-          <input @click="selectScore" type="radio" name="rating" :value="2" id="rate4"><label for="rate4">⭐</label>
-          <input @click="selectScore" type="radio" name="rating" :value="1" id="rate5"><label for="rate5">⭐</label>
-        </fieldset>
-        <button type="submit">작성</button>
-      </form>
+  <div class="container">
+    <div class="row">
+      <div class="MultiCarousel" data-items="3, 3, 3, 3" data-slide="2" id="MultiCarousel"  data-interval="1000">
+              <div class="MultiCarousel-inner">
+                  <div v-for="review in reviews" :key="review.id" class="item">
+                      <div class="pad15">
+                          <p class="lead">{{review.username}}</p>
+                          <p>{{review.rate}}</p>
+                          <p>{{review.content}}</p>
+                      </div>
+                  </div>
+              </div>
+              <button class="btn btn-primary leftLst">left</button>
+              <button class="btn btn-primary rightLst">right</button>
+          </div>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import $ from 'jquery'
 
 export default {
   name: 'reviewList',
-  data(){
-    return {
-      value: 0,
-      content: '',
-      reviews: []
-    }
-  },
   props:{
-    movie_pk: String
-  },
-  created(){
-    axios({
-      method: 'get',
-      url: `http://127.0.0.1:8000/api/v1/movies/${this.movie_pk}/commentlist/`
-    }).then(res => {
-      this.reviews = res.data
-    })
-  },
-  methods:{
-    createReview(){
-      axios({
-        method: 'post',
-        url: `http://127.0.0.1:8000/api/v1/movies/${this.movie_pk}/comments/`,
-        data: {
-          content: this.content,
-          rate: this.value,
-        },
-        headers:{
-          Authorization: `Token ${this.$store.state.token}`
-        }
-      }).then(res => {
-        console.log(res)
-      }).then(() => {
-        axios({
-          method: 'get',
-          url: `http://127.0.0.1:8000/api/v1/movies/${this.movie_pk}/commentlist/`
-        }).then(res => {
-          this.reviews = res.data
-        })
-      }).catch(err => {
-        console.log(err)
-      })
-    },
-    selectScore(event){
-      this.value = event.target.value
-    }
+    reviews: Array
   }
 }
+
+$(document).ready(function () {
+  let itemsMainDiv = ('.MultiCarousel');
+  let itemsDiv = ('.MultiCarousel-inner');
+  let itemWidth = "";
+  $('.leftLst, .rightLst').click(function () {
+    let condition = $(this).hasClass("leftLst");
+    if (condition)
+      click(0, this);
+    else
+      click(1, this)
+  });
+
+    ResCarouselSize();
+
+    $(window).resize(function () {
+      ResCarouselSize();
+    });
+
+    //this function define the size of the items
+    function ResCarouselSize() {
+      let incno = 0;
+      let dataItems = ("data-items");
+      let itemClass = ('.item');
+      let id = 0;
+      let btnParentSb = '';
+      let itemsSplit = '';
+      let sampwidth = $(itemsMainDiv).width();
+      let bodyWidth = $('body').width();
+      $(itemsDiv).each(function () {
+        id = id + 1;
+        let itemNumbers = $(this).find(itemClass).length;
+        btnParentSb = $(this).parent().attr(dataItems);
+        itemsSplit = btnParentSb.split(',');
+        $(this).parent().attr("id", "MultiCarousel" + id);
+
+
+        if (bodyWidth >= 1200) {
+            incno = itemsSplit[3];
+            itemWidth = sampwidth / incno;
+        }
+        else if (bodyWidth >= 992) {
+            incno = itemsSplit[2];
+            itemWidth = sampwidth / incno;
+        }
+        else if (bodyWidth >= 768) {
+            incno = itemsSplit[1];
+            itemWidth = sampwidth / incno;
+        }
+        else {
+            incno = itemsSplit[0];
+            itemWidth = sampwidth / incno;
+        }
+        $(this).css({ 'transform': 'translateX(0px)', 'width': itemWidth * itemNumbers });
+        $(this).find(itemClass).each(function () {
+            $(this).outerWidth(itemWidth);
+        });
+
+        $(".leftLst").addClass("over");
+        $(".rightLst").removeClass("over");
+
+      });
+    }
+
+
+    //this function used to move the items
+    function ResCarousel(e, el, s) {
+        let leftBtn = ('.leftLst');
+        let rightBtn = ('.rightLst');
+        let translateXval = '';
+        let divStyle = $(el + ' ' + itemsDiv).css('transform');
+        // eslint-disable-next-line
+        let values = divStyle.match(/-?[\d\.]+/g);
+        let xds = Math.abs(values[4]);
+        if (e == 0) {
+            translateXval = parseInt(xds) - parseInt(itemWidth * s);
+            $(el + ' ' + rightBtn).removeClass("over");
+
+            if (translateXval <= itemWidth / 2) {
+                translateXval = 0;
+                $(el + ' ' + leftBtn).addClass("over");
+            }
+        }
+        else if (e == 1) {
+            let itemsCondition = $(el).find(itemsDiv).width() - $(el).width();
+            translateXval = parseInt(xds) + parseInt(itemWidth * s);
+            $(el + ' ' + leftBtn).removeClass("over");
+
+            if (translateXval >= itemsCondition - itemWidth / 2) {
+                translateXval = itemsCondition;
+                $(el + ' ' + rightBtn).addClass("over");
+            }
+        }
+        $(el + ' ' + itemsDiv).css('transform', 'translateX(' + -translateXval + 'px)');
+    }
+
+    //It is used to get some elements from btn
+    function click(ell, ee) {
+        let Parent = "#" + $(ee).parent().attr("id");
+        let slide = $(Parent).attr("data-slide");
+        ResCarousel(ell, Parent, slide);
+    }
+
+});
 </script>
 
 <style>
-#myform fieldset{
-    display: inline-block; /* 하위 별점 이미지들이 있는 영역만 자리를 차지함.*/
-    direction: rtl; /* 이모지 순서 반전 */
-    border: 0; /* 필드셋 테두리 제거 */
-}
-#myform fieldset legend{
-    text-align: left;
-}
-#myform input[type=radio]{
-    display: none; /* 라디오박스 감춤 */
-}
-#myform label{
-    font-size: 1em; /* 이모지 크기 */
-    color: transparent; /* 기존 이모지 컬러 제거 */
-    text-shadow: 0 0 0 #f0f0f0; /* 새 이모지 색상 부여 */
-}
-#myform label:hover{
-    text-shadow: 0 0 0 rgb(232, 247, 31); /* 마우스 호버 */
-}
-#myform label:hover ~ label{
-    text-shadow: 0 0 0 rgb(232, 247, 31); /* 마우스 호버 뒤에오는 이모지들 */
-}
-#myform input[type=radio]:checked ~ label{
-    text-shadow: 0 0 0 rgb(232, 247, 31); /* 마우스 클릭 체크 */
-}
-
+.MultiCarousel { float: left; overflow: hidden; padding: 15px; width: 100%; position:relative; }
+.MultiCarousel .MultiCarousel-inner { transition: 1s ease all; float: left; }
+.MultiCarousel .MultiCarousel-inner .item { float: left;}
+.MultiCarousel .MultiCarousel-inner .item > div { text-align: center; padding:10px; margin:10px; background:#f1f1f1; color:#666;}
+.MultiCarousel .leftLst, .MultiCarousel .rightLst { position:absolute; border-radius:50%;top:calc(50% - 20px); }
+.MultiCarousel .leftLst { left:0; }
+.MultiCarousel .rightLst { right:0; }
+.MultiCarousel .leftLst.over, .MultiCarousel .rightLst.over { pointer-events: none; background:#ccc; }
 </style>
