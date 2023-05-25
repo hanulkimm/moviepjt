@@ -2,7 +2,7 @@
   <div class="mt-5">
     <div class="row">
       <h3 class="col-2 text-center">리뷰</h3>
-      <button type="button" class="btn btn-review col-2 text-start" data-bs-toggle="modal" data-bs-target="#review-create-modal">리뷰 작성</button>
+      <button type="button" class="btn btn-review col-2" data-bs-toggle="modal" data-bs-target="#review-create-modal">리뷰 작성</button>
     </div>
     <hr>
     <div>
@@ -50,7 +50,8 @@ export default {
 
 <style>
 .btn-review{
-  border: 1px;
+  border: 1px solid;
   color: white;
+  text-align: center;
 }
 </style>

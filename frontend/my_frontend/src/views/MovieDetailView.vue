@@ -304,7 +304,7 @@ nav a {
   box-sizing: border-box;
 }
 .main{
-  height: 50vh;
+  height: 40vh;
 }
 .movie-detail-view{
   width: 1500px;
