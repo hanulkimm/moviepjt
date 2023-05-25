@@ -318,7 +318,7 @@ export default {
   display: none;
 }
 .top{
-  top: 150px;
+  top: 10vh;
 }
 .big-link {
   font-size: 3em; 
@@ -432,7 +432,7 @@ nav a.router-link-exact-active {
     text-align: left;
     -webkit-transition: all 0.4s ease;
     transition: all 0.4s ease;
-    height: 50vh;
+    height: 500px;
     max-width: 300px;
     background-color: rgb(0, 0, 0);
     opacity: 90%;

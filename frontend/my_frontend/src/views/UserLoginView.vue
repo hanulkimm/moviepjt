@@ -107,7 +107,7 @@ export default {
     text-align: left;
     -webkit-transition: all 0.4s ease;
     transition: all 0.4s ease;
-    height: 50vh;
+    height: 500px;
 }
 
 .form-content h3 {
